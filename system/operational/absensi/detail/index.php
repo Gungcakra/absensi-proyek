@@ -5,7 +5,7 @@ require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 
 checkUserSession($db);
 $idProyek = $_GET['data'] ?? '';
-$idAbsensi = $_GET['data'] ?? '';
+$idAbsensi = $_GET['absen'] ?? '';
 if ($idProyek) {
     $idProyek = decryptUrl($idProyek);
 }

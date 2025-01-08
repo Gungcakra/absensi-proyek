@@ -93,7 +93,7 @@ $absensi = query($query, $params);
                                     <tr>
                                         <td><?= timeStampToTanggalNamaBulan($rowDetail['tanggal']) ?></td>
 
-                                        <td><a href="detail/?data=<?= encryptUrl($rowDetail['idAbsensi']) ?>" class="btn btn-info">Detail</a></td>
+                                        <td><a href="detail/?absen=<?= encryptUrl($rowDetail['idAbsensi']) ?>" class="btn btn-info">Detail</a></td>
                                     </tr>
                                 <?php } ?>
                             <?php } else { ?>
