@@ -84,12 +84,18 @@ function checkUserSession($db)
 // URL encryption and decryption
 function encryptUrl($url)
 {
-    return base64_encode($url);
+    $encryptedUrl = base64_encode($url);
+    $encryptedUrl = str_rot13($encryptedUrl);
+    $encryptedUrl = bin2hex($encryptedUrl);
+    return $encryptedUrl;
 }
 
 function decryptUrl($encryptedUrl)
 {
-    return base64_decode($encryptedUrl);
+    $encryptedUrl = hex2bin($encryptedUrl);
+    $encryptedUrl = str_rot13($encryptedUrl);
+    $url = base64_decode($encryptedUrl);
+    return $url;
 }
 
 // Get current directory

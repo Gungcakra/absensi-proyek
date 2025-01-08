@@ -4,6 +4,9 @@ require_once "../../../../library/config.php";
 checkUserSession($db);
 
 $idAbsensi = $_GET['data'] ?? '';
+if($idAbsensi) {
+    $idAbsensi = decryptUrl($idAbsensi);
+}
 if ($idAbsensi) {
     $data = query("SELECT * FROM absensi WHERE idAbsensi  = ?", [$idAbsensi])[0];
     $flagAbsensi = 'update';

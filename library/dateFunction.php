@@ -58,3 +58,13 @@ function namaBulan($nomorBulan) {
 
     return isset($namaBulan[$nomorBulan]) ? $namaBulan[$nomorBulan] : '';
 }
+
+function timeStampToTanggalNamaBulan($timestamp) {
+    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($timestamp)));
+    
+    $hari = $dateTime->format('d');
+    $bulan = namaBulan((int)$dateTime->format('m'));
+    $tahun = $dateTime->format('Y');
+    
+    return "$hari $bulan $tahun";
+}
