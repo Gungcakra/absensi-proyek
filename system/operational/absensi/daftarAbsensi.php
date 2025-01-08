@@ -82,7 +82,7 @@ $absensi = query($query, $params);
                                 GROUP_CONCAT(idAbsensi) AS idAbsensiList 
                              FROM absensi 
                              WHERE idProyek = ? 
-                             GROUP BY tanggal",
+                             GROUP BY tanggal ORDER BY tanggal DESC ",
                             [$row['idProyek']]
                         );
                         

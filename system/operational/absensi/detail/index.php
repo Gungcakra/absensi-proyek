@@ -9,10 +9,10 @@ $idAbsensi = $_GET['absen'] ?? '';
 if ($idProyek) {
     $idProyek = decryptUrl($idProyek);
 }
-if($idAbsensi){
+if ($idAbsensi) {
     $idAbsensi = decryptUrl($idAbsensi);
-    $tanggalAbsensi = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['tanggal'];                                                                
-    $idProyek = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['idProyek'];                                                                
+    $tanggalAbsensi = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['tanggal'];
+    $idProyek = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['idProyek'];
     $dataDetailAbsensi = query(
         "SELECT 
     proyek.*,
@@ -30,26 +30,26 @@ LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang
     AND absensi.idProyek = tukang.idProyek 
     AND absensi.tanggal = ?
 WHERE tukang.idProyek = ?",
-        [$tanggalAbsensi,$idProyek]
+        [$tanggalAbsensi, $idProyek]
     );
-
-}else{
+} else {
     $dataDetailAbsensi = query(
         "SELECT 
-        proyek.*,
-        absensi.idAbsensi,
-        tukang.idTukang,
-        tukang.nama AS namaTukang,
-        tukang.bidang,
-        tukang.jenis,
-        absensi.waktuMasuk,
-        absensi.waktuKeluar,
-        IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
-    FROM tukang
-    LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
-    LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang AND absensi.idProyek = tukang.idProyek
-    WHERE tukang.idProyek = ?
-                        ",
+            proyek.*,
+            absensi.idAbsensi,
+            tukang.idTukang,
+            tukang.nama AS namaTukang,
+            tukang.bidang,
+            tukang.jenis,
+            absensi.waktuMasuk,
+            absensi.waktuKeluar,
+            IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
+        FROM tukang
+        LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
+        LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
+            AND absensi.idProyek = tukang.idProyek 
+            AND absensi.tanggal >= CURDATE()
+        WHERE tukang.idProyek = ?",
         [$idProyek]
     );
 }
@@ -119,8 +119,8 @@ WHERE tukang.idProyek = ?",
                                     <td>
                                         <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
                                             <div class="custom-switch-inner">
-                                                <input type="checkbox" class="custom-control-input bg-success" id="customSwitch-<?= $key ?>" <?= $row['status'] === 'Hadir' ? 'checked' : '' ?>  onclick="prosesAbsensi(<?= htmlspecialchars(json_encode($row)) ?>)">
-                                                <label class="custom-control-label" for="customSwitch-<?= $key ?>" >
+                                                <input type="checkbox" class="custom-control-input bg-success" id="customSwitch-<?= $key ?>" <?= $row['status'] === 'Hadir' ? 'checked' : '' ?> onclick="prosesAbsensi(<?= htmlspecialchars(json_encode($row)) ?>)">
+                                                <label class="custom-control-label" for="customSwitch-<?= $key ?>">
                                                 </label>
                                             </div>
                                         </div>
