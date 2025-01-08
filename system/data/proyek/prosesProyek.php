@@ -1,0 +1,70 @@
+<?php
+session_start();
+require_once __DIR__ . "/../../../library/config.php";
+checkUserSession($db);
+
+function addProyek($namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status) {
+    $query = "INSERT INTO proyek (namaProyek, namaPemilik, tanggalMulai, tanggalTarget, alamat, status) VALUES (?, ?, ?, ?, ?, ?)";
+    return query($query, [$namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status]);
+}
+
+function deleteProyek($idProyek) {
+    $query = "DELETE FROM proyek WHERE idProyek = ?";
+    return query($query, [$idProyek]);
+}
+
+function updateProyek($idProyek, $namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status) {
+    $query = "UPDATE proyek SET namaProyek = ?, namaPemilik = ?, tanggalMulai = ?, tanggalTarget = ?, alamat = ?, status = ? WHERE idProyek = ?";
+    return query($query, [$namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status, $idProyek]);
+}
+
+if (isset($_POST['flagProyek'])) {
+    $flagProyek = $_POST['flagProyek'];
+    $response = ["status" => false, "pesan" => "Invalid action"];
+
+    switch ($flagProyek) {
+        case 'add':
+            $namaProyek = $_POST['namaProyek'];
+            $namaPemilik = $_POST['namaPemilik'];
+            $tanggalMulai = $_POST['tanggalMulai'];
+            $tanggalTarget = $_POST['tanggalTarget'];
+            $alamat = $_POST['alamat'];
+            $status = $_POST['status'];
+            $result = addProyek($namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status);
+            if ($result > 0) {
+                $response = ["status" => true, "pesan" => "Proyek added successfully!"];
+            } else {
+                $response = ["status" => false, "pesan" => "Failed to add Proyek."];
+            }
+            break;
+
+        case 'delete':
+            $idProyek = $_POST['idProyek'];
+            $result = deleteProyek($idProyek);
+            if ($result > 0) {
+                $response = ["status" => true, "pesan" => "Proyek deleted successfully!"];
+            } else {
+                $response = ["status" => false, "pesan" => "Failed to delete Proyek: " . mysqli_error($db)];
+            }
+            break;
+
+        case 'update':
+            $idProyek = $_POST['idProyek'];
+            $namaProyek = $_POST['namaProyek'];
+            $namaPemilik = $_POST['namaPemilik'];
+            $tanggalMulai = $_POST['tanggalMulai'];
+            $tanggalTarget = $_POST['tanggalTarget'];
+            $alamat = $_POST['alamat'];
+            $status = $_POST['status'];
+            $result = updateProyek($idProyek, $namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status);
+            if ($result) {
+                $response = ["status" => true, "pesan" => "Proyek updated successfully!"];
+            } else {
+                $response = ["status" => false, "pesan" => "Failed to update Proyek: " . mysqli_error($db)];
+            }
+            break;
+    }
+
+    echo json_encode($response);
+}
+?>
