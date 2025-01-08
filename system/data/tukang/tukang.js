@@ -43,7 +43,7 @@ function deleteTukang(id) {
         url: "prosesTukang.php",
         type: "post",
         data: {
-          tukangId: id,
+          idTukang: id,
           flagTukang: "delete",
         },
         dataType: "json",

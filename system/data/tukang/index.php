@@ -54,14 +54,14 @@ checkUserSession($db);
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Tukang List</h4>
+                                    <h4 class="card-title">Daftar Tukang</h4>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <div class="row justify-content-between">
                                         <div class="col-sm-6 col-md-6">
-                                            <div id="tukang_list_datatable_info" class="dataTables_filter">
+                                            <div id="user_list_datatable_info" class="dataTables_filter">
 
                                                 <form class="mr-3 position-relative d-flex ">
                                                     <div class="col-md-6 m-0 p-0">
@@ -69,7 +69,7 @@ checkUserSession($db);
                                                             name="searchQuery"
                                                             autocomplete="off"
                                                             onkeyup="cariDaftarTukang()"
-                                                            aria-controls="tukang-list-table">
+                                                            aria-controls="user-list-table">
                                                     </div>
                                                     <div class="col-md-2 m-0 p-0 ml-2">
                                                             <select class="custom-select" id="limit" name="limit" onclick="cariDaftarTukang()">
@@ -84,7 +84,7 @@ checkUserSession($db);
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6">
-                                            <div class="tukang-list-files d-flex">
+                                            <div class="user-list-files d-flex">
                                                 <!-- <button class="btn btn-primary mr-1" href="javascript:void();">
                                                     Print
                                                 </button>

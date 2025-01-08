@@ -52,8 +52,9 @@ $user = query($query, $params);
         </tr>
     </thead>
     <tbody>
+       <?php if($user){?>
+        <?php foreach ($user as $key => $row): ?>
         <tr>
-            <?php foreach ($user as $key => $row): ?>
                 <td><?= $key + 1 ?></td>
                 <td>
                     <div class="btn-group" role="group"></div>
@@ -77,6 +78,11 @@ $user = query($query, $params);
                 <td><?= $row['username'] ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php } else { ?>
+        <tr>
+            <td colspan="3" class="text-center">No data found</td>
+        </tr>
+    <?php } ?>
 
     </tbody>
 </table>

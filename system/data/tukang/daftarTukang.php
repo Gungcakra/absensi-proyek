@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "../../../library/config.php";
+require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 
 //CEK USER
 checkUserSession($db);
@@ -28,13 +29,17 @@ if ($flagTukang === 'cari') {
     }
 }
 
-$totalQuery = "SELECT COUNT(*) as total FROM tukang " . $conditions;
+$totalQuery = "SELECT COUNT(*) as total FROM tukang INNER JOIN bidang ON tukang.idBidang = bidang.idBidang" . $conditions;
 $totalResult = query($totalQuery, $params);
 $totalRecords = $totalResult[0]['total'];
 $totalPages = ceil($totalRecords / $limit);
 
-$query = "SELECT *
-          FROM tukang " . $conditions . " LIMIT ? OFFSET ?";
+$query = "SELECT 
+                tukang.*,
+                bidang.*
+          FROM tukang 
+          INNER JOIN bidang ON tukang.idBidang = bidang.idBidang"
+          . $conditions . " LIMIT ? OFFSET ?";
 
 
 $params[] = $limit;
@@ -48,12 +53,17 @@ $tukang = query($query, $params);
         <tr class="ligth">
             <th>#</th>
             <th style="min-width: 100px">Action</th>
-            <th>Name</th>
+            <th>Nama</th>
+            <th>Tipe</th>
+            <th>Jenis</th>
+            <th>Gaji</th>
         </tr>
     </thead>
     <tbody>
+       <?php if($tukang){
+        ?>
+         <?php foreach ($tukang as $key => $row): ?>
         <tr>
-            <?php foreach ($tukang as $key => $row): ?>
                 <td><?= $key + 1 ?></td>
                 <td>
                     <div class="btn-group" role="group"></div>
@@ -65,18 +75,27 @@ $tukang = query($query, $params);
                         <!-- <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Add">
                             <i class="ri-tukang-add-line mr-0"></i> Add
                         </a> -->
-                        <a class="dropdown-item" href="form/?data=<?= $row['tukangId'] ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                        <a class="dropdown-item" href="form/?data=<?= $row['idTukang'] ?>" data-toggle="tooltip" data-placement="top" title="Edit">
                             <i class="ri-pencil-line mr-0"></i> Edit
                         </a>
-                        <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteTukang(<?= $row['tukangId'] ?>)">
+                        <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteTukang(<?= $row['idTukang'] ?>)">
                             <i class="ri-delete-bin-line mr-0"></i> Delete
                         </a>
                     </div>
                     </div>
                 </td>
-                <td><?= $row['tukangname'] ?></td>
+                <td><?= $row['nama'] ?></td>
+                <td><?= $row['tipe'] ?></td>
+                <td><?= $row['jenis'] ?></td>
+                <td><?= rupiah($row['gaji'] )?></td>
         </tr>
+        
     <?php endforeach; ?>
+    <?php } else { ?>
+        <tr>
+            <td colspan="6" class="text-center">No data found</td>
+        </tr>
+    <?php } ?>
 
     </tbody>
 </table>

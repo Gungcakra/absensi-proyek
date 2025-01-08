@@ -1,68 +1,68 @@
 <?php
 session_start();
 require_once __DIR__ . "/../../../library/config.php";
-function getLastUser() {
-    $query = "SELECT userId FROM user ORDER BY userId DESC LIMIT 1";
+checkUserSession($db);
+
+function getLastTukang() {
+    $query = "SELECT idTukang FROM tukang ORDER BY idTukang DESC LIMIT 1";
     $result = query($query);
-    return $result[0]['userId'];
-}
-function addUser($username, $password) {
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $query = "INSERT INTO user (username, password) VALUES (?, ?)";
-    return query($query, [$username, $hashedPassword]);
+    return $result[0]['idTukang'];
 }
 
-function deleteUser($userId) {
-    $query = "DELETE FROM user WHERE userId = ?";
-    return query($query, [$userId]);
+function addTukang($idBidang, $nama, $alamat, $idProyek) {
+    $query = "INSERT INTO tukang (idBidang, nama, alamat, idProyek) VALUES (?, ?, ?, ?)";
+    return query($query, [$idBidang, $nama, $alamat, $idProyek]);
 }
 
-function updateUser($userId, $username, $password = null) {
-    if ($password) {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $query = "UPDATE user SET username = ?, password = ? WHERE userId = ?";
-        return query($query, [$username, $hashedPassword, $userId]);
-    } else {
-        $query = "UPDATE user SET username = ? WHERE userId = ?";
-        return query($query, [$username, $userId]);
-    }
+function deleteTukang($idTukang) {
+    $query = "DELETE FROM tukang WHERE idTukang = ?";
+    return query($query, [$idTukang]);
 }
 
-if (isset($_POST['flagUser'])) {
-    $flagUser = $_POST['flagUser'];
+function updateTukang($idTukang, $idBidang, $nama, $alamat, $idProyek) {
+    $query = "UPDATE tukang SET idBidang = ?, nama = ?, alamat = ?, idProyek = ? WHERE idTukang = ?";
+    return query($query, [$idBidang, $nama, $alamat, $idProyek, $idTukang]);
+}
+
+if (isset($_POST['flagTukang'])) {
+    $flagTukang = $_POST['flagTukang'];
     $response = ["status" => false, "pesan" => "Invalid action"];
 
-    switch ($flagUser) {
+    switch ($flagTukang) {
         case 'add':
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $result = addUser($username, $password);
+            $idBidang = $_POST['idBidang'];
+            $nama = $_POST['nama'];
+            $alamat = $_POST['alamat'];
+            $idProyek = $_POST['idProyek'];
+            $result = addTukang($idBidang, $nama, $alamat, $idProyek);
             if ($result > 0) {
-                $response = ["status" => true, "pesan" => "User added successfully!"];
+                $response = ["status" => true, "pesan" => "Tukang added successfully!"];
             } else {
-                $response = ["status" => false, "pesan" => "Failed to add User."];
+                $response = ["status" => false, "pesan" => "Failed to add Tukang."];
             }
             break;
 
         case 'delete':
-            $userId = $_POST['userId'];
-            $result = deleteUser($userId);
+            $idTukang = $_POST['idTukang'];
+            $result = deleteTukang($idTukang);
             if ($result > 0) {
-                $response = ["status" => true, "pesan" => "User deleted successfully!"];
+                $response = ["status" => true, "pesan" => "Tukang deleted successfully!"];
             } else {
-                $response = ["status" => false, "pesan" => "Failed to delete User: " . mysqli_error($db)];
+                $response = ["status" => false, "pesan" => "Failed to delete Tukang: " . mysqli_error($db)];
             }
             break;
 
         case 'update':
-            $userId = $_POST['idUser'];
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $result = updateUser($userId, $username, $password);
+            $idTukang = $_POST['idTukang'];
+            $idBidang = $_POST['idBidang'];
+            $nama = $_POST['nama'];
+            $alamat = $_POST['alamat'];
+            $idProyek = $_POST['idProyek'];
+            $result = updateTukang($idTukang, $idBidang, $nama, $alamat, $idProyek);
             if ($result) {
-                $response = ["status" => true, "pesan" => "User updated successfully!"];
+                $response = ["status" => true, "pesan" => "Tukang updated successfully!"];
             } else {
-                $response = ["status" => false, "pesan" => "Failed to update User: " . mysqli_error($db)];
+                $response = ["status" => false, "pesan" => "Failed to update Tukang: " . mysqli_error($db)];
             }
             break;
     }
