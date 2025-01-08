@@ -72,7 +72,7 @@ $absensi = query($query, $params);
                 Detail Absen
             </button>
             <div class="collapse" id="collapseTable<?= $key ?>">
-                <div class="card card-body">
+                <div class="card card-body d-flex justify-content-center">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -82,22 +82,22 @@ $absensi = query($query, $params);
                         </thead>
                         <tbody>
                             <?php
-                           $detailAbsen = query(
-                            "SELECT 
+                            $detailAbsen = query(
+                                "SELECT 
                                DATE(tanggal) as tanggal, 
                                MIN(idDetailAbsensi) as idDetailAbsensi, 
                                COUNT(*) as jumlah_absen 
                            FROM 
-                               detail_absensi 
+                               detail_absensi
                            WHERE 
                                idAbsensi = ? 
                            GROUP BY 
                                DATE(tanggal) 
                            ORDER BY 
                                DATE(tanggal) ASC
-                       ", [$row['idAbsensi']]);
-                       
-
+                       ",
+                                [$row['idAbsensi']]
+                            );
 
                             if ($detailAbsen) {
                                 foreach ($detailAbsen as $key => $rowDetail) {
@@ -109,7 +109,14 @@ $absensi = query($query, $params);
                                 <?php } ?>
                             <?php } else { ?>
                                 <tr>
-                                    <td colspan="2" class="text-center">No data found</td>
+                                    <td colspan="2" class="text-center">
+                                        <div class="alert alert-warning" role="alert">
+                                            <div class="iq-alert-icon">
+                                                <i class="ri-alert-line"></i>
+                                            </div>
+                                            <div class="iq-alert-text">Data Not Found!</div>
+                                        </div>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         </tbody>
