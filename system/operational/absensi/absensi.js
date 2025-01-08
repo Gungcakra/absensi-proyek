@@ -28,7 +28,6 @@ function daftarAbsensi() {
   });
 }
 
-
 function deleteAbsensi(id) {
   Swal.fire({
     title: "Are You Sure?",
@@ -64,49 +63,32 @@ function deleteAbsensi(id) {
   });
 }
 
-function loadPage(pageNumber) {
-  const limit = $("#limit").val();
-  $.ajax({
-    type: "POST",
-    url: "daftarAbsensi.php",
-    data: {
-      flagAbsensi: "cari",
-      page: pageNumber,
-      searchQuery: $("#searchQuery").val(),
-      limit: limit,
-    },
-    success: function (data) {
-      $("#daftarAbsensi").html(data);
-    },
-  });
-}
 
-function prosesAbsensi() {
-  const formAbsensi = $("#formAbsensiInput")[0];
-  const dataForm = new FormData(formAbsensi);
 
+function prosesAbsensi(data) {
+  const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
+  const idTukang = data.idTukang;
+  const idProyek = data.idProyek;
   $.ajax({
     url: "../prosesAbsensi.php",
     type: "post",
     enctype: "multipart/form-data",
-    processData: false,
-    contentType: false,
-    data: dataForm,
+    data: {
+      flagAbsensi: "absensi",
+      idAbsensi: idAbsensi,
+      idTukang: idTukang,
+      idProyek: idProyek,
+
+    },
     dataType: "json",
     success: function (data) {
       const { status, pesan } = data;
       notifikasi(status, pesan);
-      if (status) {
-        setTimeout(function() {
-          window.location.href = "../";
-        }, 500); // Delay the redirect to allow the notification to show
-      }
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error("Error:", textStatus, errorThrown);
     },
   });
-  
 }
 
 

@@ -68,3 +68,7 @@ function timeStampToTanggalNamaBulan($timestamp) {
     
     return "$hari $bulan $tahun";
 }
+function timeStampToDate($timestamp) {
+    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $timestamp);
+    return $dateTime->format('Y-m-d');
+}

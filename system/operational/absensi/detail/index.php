@@ -4,25 +4,56 @@ require_once "../../../../library/config.php";
 require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 
 checkUserSession($db);
-
-$idDetailAbsensi = $_GET['data'] ?? '';
-if ($idDetailAbsensi) {
-    $idDetailAbsensi = decryptUrl($idDetailAbsensi);
+$idProyek = $_GET['data'] ?? '';
+$idAbsensi = $_GET['data'] ?? '';
+if ($idProyek) {
+    $idProyek = decryptUrl($idProyek);
 }
-$idAbsensi = query("SELECT idAbsensi FROM detail_absensi WHERE idDetailAbsensi = ?", [$idDetailAbsensi])[0]['idAbsensi'];
-$dataDetailAbsensi = query("SELECT 
-                                    detail_absensi.*,
-                                    detail_absensi.tanggal AS tanggalAbsensi,
-                                    absensi.*,
-                                    proyek.*,
-                                    tukang.nama AS namaTukang,
-                                    bidang.*
-                                    FROM detail_absensi
-                                    INNER JOIN absensi ON detail_absensi.idAbsensi = absensi.idAbsensi
-                                    INNER JOIN proyek ON absensi.idProyek = proyek.idProyek
-                                    INNER JOIN tukang ON detail_absensi.idTukang = tukang.idTukang
-                                    INNER JOIN bidang ON tukang.idBidang = bidang.idBidang
-                                    WHERE detail_absensi.idAbsensi = ?", [$idAbsensi]);
+if($idAbsensi){
+    $idAbsensi = decryptUrl($idAbsensi);
+    $tanggalAbsensi = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['tanggal'];                                                                
+    $idProyek = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['idProyek'];                                                                
+    $dataDetailAbsensi = query(
+        "SELECT 
+    proyek.*,
+    absensi.idAbsensi,
+    tukang.idTukang,
+    tukang.nama AS namaTukang,
+    tukang.bidang,
+    tukang.jenis,
+    absensi.waktuMasuk,
+    absensi.waktuKeluar,
+    IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
+FROM tukang
+LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
+LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
+    AND absensi.idProyek = tukang.idProyek 
+    AND absensi.tanggal = ?
+WHERE tukang.idProyek = ?",
+        [$tanggalAbsensi,$idProyek]
+    );
+
+}else{
+    $dataDetailAbsensi = query(
+        "SELECT 
+        proyek.*,
+        absensi.idAbsensi,
+        tukang.idTukang,
+        tukang.nama AS namaTukang,
+        tukang.bidang,
+        tukang.jenis,
+        absensi.waktuMasuk,
+        absensi.waktuKeluar,
+        IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
+    FROM tukang
+    LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
+    LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang AND absensi.idProyek = tukang.idProyek
+    WHERE tukang.idProyek = ?
+                        ",
+        [$idProyek]
+    );
+}
+
 ?>
 
 <!doctype html>
@@ -65,26 +96,36 @@ $dataDetailAbsensi = query("SELECT
 
         <div class="content-page">
             <div class="container-fluid bg-white p-4 rouned-md">
-                <h4>Detail Absensi <?= $dataDetailAbsensi[0]['namaProyek'] ?> - <?= timeStampToTanggalNamaBulan($dataDetailAbsensi[0]['tanggalAbsensi']) ?></h4>
+                <h4>Absensi Proyek</h4>
                 <div class="row">
                     <table class="table table-striped dataTable mt-4" role="grid"
-                    aria-describedby="tukang-list-page-info">
+                        aria-describedby="tukang-list-page-info">
                         <thead>
                             <tr>
                                 <th>NO</th>
                                 <th>Tukang</th>
                                 <th>Bidang</th>
-                                <th>Tipe</th>
+                                <th>Jenis</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($dataDetailAbsensi as $key => $row){ ?>
-                            <tr>
-                                <td><?= $key+1 ?></td>
-                                <td><?= $row['namaTukang']?></td>
-                                <td><?= $row['jenis']?></td>
-                                <td><?= $row['tipe']?></td>
-                            </tr>
+                            <?php foreach ($dataDetailAbsensi as $key => $row) { ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= $row['namaTukang'] ?></td>
+                                    <td><?= $row['bidang'] ?></td>
+                                    <td><?= $row['jenis'] ?></td>
+                                    <td>
+                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                            <div class="custom-switch-inner">
+                                                <input type="checkbox" class="custom-control-input bg-success" id="customSwitch-<?= $key ?>" <?= $row['status'] === 'Hadir' ? 'checked' : '' ?>  onclick="prosesAbsensi(<?= htmlspecialchars(json_encode($row)) ?>)">
+                                                <label class="custom-control-label" for="customSwitch-<?= $key ?>" >
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>

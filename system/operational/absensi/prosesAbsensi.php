@@ -9,9 +9,10 @@ function getLastAbsensi() {
     return $result[0]['idAbsensi'];
 }
 
-function addAbsensi($idProyek, $longitude, $latitude, $radius) {
-    $query = "INSERT INTO absensi (idProyek, longitude, latitude, radius) VALUES (?, ?, ?, ?)";
-    return query($query, [$idProyek, $longitude, $latitude, $radius]);
+function addAbsensi($idProyek, $idTukang) {
+    $tanggal = date('Y-m-d H:i:s');
+    $query = "INSERT INTO absensi (idProyek, idTukang, tanggal) VALUES (?, ?, ?)";
+    return query($query, [$idProyek, $idTukang, $tanggal]);
 }
 
 function deleteAbsensi($idAbsensi) {
@@ -19,52 +20,28 @@ function deleteAbsensi($idAbsensi) {
     return query($query, [$idAbsensi]);
 }
 
-function updateAbsensi($idAbsensi, $idProyek, $longitude, $latitude, $radius) {
-    $query = "UPDATE absensi SET idProyek = ?, longitude = ?, latitude = ?, radius = ? WHERE idAbsensi = ?";
-    return query($query, [$idProyek, $longitude, $latitude, $radius, $idAbsensi]);
-}
-
 if (isset($_POST['flagAbsensi'])) {
     $flagAbsensi = $_POST['flagAbsensi'];
-    $response = ["status" => false, "pesan" => "Invalid action"];
-
-    switch ($flagAbsensi) {
-        case 'add':
-            $idProyek = $_POST['idProyek'];
-            $longitude = $_POST['longitude'];
-            $latitude = $_POST['latitude'];
-            $radius = $_POST['radius'];
-            $result = addAbsensi($idProyek, $longitude, $latitude, $radius);
-            if ($result > 0) {
-                $response = ["status" => true, "pesan" => "Absensi added successfully!"];
-            } else {
-                $response = ["status" => false, "pesan" => "Failed to add Absensi."];
-            }
-            break;
-
-        case 'delete':
-            $idAbsensi = $_POST['idAbsensi'];
+    if ($flagAbsensi === 'absensi') {
+        $idTukang = $_POST['idTukang'];
+        $idProyek = $_POST['idProyek'];
+        $idAbsensi = $_POST['idAbsensi'];
+        
+        if (!empty($idAbsensi)) {
             $result = deleteAbsensi($idAbsensi);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Absensi deleted successfully!"];
             } else {
                 $response = ["status" => false, "pesan" => "Failed to delete Absensi: " . mysqli_error($db)];
             }
-            break;
-
-        case 'update':
-            $idAbsensi = $_POST['idAbsensi'];
-            $idProyek = $_POST['idProyek'];
-            $longitude = $_POST['longitude'];
-            $latitude = $_POST['latitude'];
-            $radius = $_POST['radius'];
-            $result = updateAbsensi($idAbsensi, $idProyek, $longitude, $latitude, $radius);
-            if ($result) {
-                $response = ["status" => true, "pesan" => "Absensi updated successfully!"];
+        } else {
+            $result = addAbsensi($idProyek, $idTukang);
+            if ($result > 0) {
+                $response = ["status" => true, "pesan" => "Absensi added successfully!"];
             } else {
-                $response = ["status" => false, "pesan" => "Failed to update Absensi: " . mysqli_error($db)];
+                $response = ["status" => false, "pesan" => "Failed to add Absensi."];
             }
-            break;
+        }
     }
 
     echo json_encode($response);

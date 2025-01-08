@@ -64,14 +64,14 @@ checkUserSession($db);
                                             <div id="user_list_datatable_info" class="dataTables_filter">
 
                                                 <form class="mr-3 position-relative d-flex ">
-                                                    <div class="col-md-6 m-0 p-0">
+                                                    <!-- <div class="col-md-6 m-0 p-0">
                                                         <input type="text" class="form-control" id="searchQuery" placeholder="Search"
                                                             name="searchQuery"
                                                             autocomplete="off"
                                                             onkeyup="cariDaftarAbsensi()"
                                                             aria-controls="user-list-table">
-                                                    </div>
-                                                    <div class="col-md-2 m-0 p-0 ml-2">
+                                                    </div> -->
+                                                    <!-- <div class="col-md-2 m-0 p-0 ml-2">
                                                             <select class="custom-select" id="limit" name="limit" onclick="cariDaftarAbsensi()">
                                                                 <option value="10">10</option>
                                                                 <option value="20">20</option>
@@ -79,19 +79,19 @@ checkUserSession($db);
                                                                 <option value="100">100</option>
                                                             </select>
                                                         
-                                                    </div>
+                                                    </div> -->
                                                 </form>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6">
-                                            <div class="user-list-files d-flex">
+                                            <div class="user-list-files d-flex justify-content-end">
                                                 <!-- <button class="btn btn-primary mr-1" href="javascript:void();">
                                                     Print
                                                 </button>
                                                 <button class="btn btn-primary mr-1" href="javascript:void();">
                                                     Excel
                                                 </button> -->
-                                                <a class="btn btn-primary mr-1" href="./form/">+ Absensi</a>
+                                                <!-- <a class="btn btn-primary mr-1" href="./form/">+ Absensi</a> -->
 
                                             </div>
                                         </div>

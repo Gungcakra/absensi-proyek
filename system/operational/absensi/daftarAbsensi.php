@@ -25,7 +25,7 @@ if ($flagAbsensi === 'cari') {
     // }
     if (!empty($searchQuery)) {
         $roleId = '';
-        $conditions .= " WHERE proyek.namaProyek LIKE ?";
+        $conditions .= " WHERE namaProyek LIKE ?";
         $params[] = "%$searchQuery%";
     }
 }
@@ -35,12 +35,7 @@ if ($flagAbsensi === 'cari') {
 // $totalRecords = $totalResult[0]['total'];
 // $totalPages = ceil($totalRecords / $limit);
 
-$query = "SELECT 
-                absensi.*,
-                proyek.*
-          FROM absensi 
-          INNER JOIN proyek ON absensi.idProyek = proyek.idProyek"
-    . $conditions . " ORDER BY proyek.namaProyek ASC";
+$query = "SELECT * FROM proyek" . $conditions . " ORDER BY namaProyek ASC";
 
 
 $absensi = query($query, $params);
@@ -57,8 +52,7 @@ $absensi = query($query, $params);
                     <p class="font-size-20 p-0 m-0 font-weight-bold"><?= $row['namaProyek'] ?></p>
                 </div>
                 <div class="col d-flex justify-content-end">
-                    <a href="form/?data=<?= encryptUrl($row['idAbsensi']) ?>" class="font-weight-bold text-white btn btn-info mr-1">Edit</a>
-                    <a class="font-weight-bold text-white btn btn-danger" onclick="deleteAbsensi('<?= $row['idAbsensi'] ?>')">Delete</a>
+                    <a href="detail/?data=<?= encryptUrl($row['idProyek']) ?>" class="btn btn-success">+Absen</a>
                 </div>
             </div>
             <div class="row d-flex justify-content-start mt-1 align-items-center">
@@ -72,8 +66,7 @@ $absensi = query($query, $params);
                 Detail Absen
             </button>
             <div class="collapse" id="collapseTable<?= $key ?>">
-                <div class="card card-body d-flex justify-content-center">
-                    <table class="table table-bordered">
+            <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
@@ -82,29 +75,25 @@ $absensi = query($query, $params);
                         </thead>
                         <tbody>
                             <?php
-                            $detailAbsen = query(
-                                "SELECT 
-                               DATE(tanggal) as tanggal, 
-                               MIN(idDetailAbsensi) as idDetailAbsensi, 
-                               COUNT(*) as jumlah_absen 
-                           FROM 
-                               detail_absensi
-                           WHERE 
-                               idAbsensi = ? 
-                           GROUP BY 
-                               DATE(tanggal) 
-                           ORDER BY 
-                               DATE(tanggal) ASC
-                       ",
-                                [$row['idAbsensi']]
-                            );
+                          $Absensi = query(
+                            "SELECT 
+                                MIN(idAbsensi) AS idAbsensi, 
+                                tanggal, 
+                                GROUP_CONCAT(idAbsensi) AS idAbsensiList 
+                             FROM absensi 
+                             WHERE idProyek = ? 
+                             GROUP BY tanggal",
+                            [$row['idProyek']]
+                        );
+                        
 
-                            if ($detailAbsen) {
-                                foreach ($detailAbsen as $key => $rowDetail) {
+                            if ($Absensi) {
+                                foreach ($Absensi as $key => $rowDetail) {
                             ?>
                                     <tr>
                                         <td><?= timeStampToTanggalNamaBulan($rowDetail['tanggal']) ?></td>
-                                        <td><a href="detail/?data=<?= encryptUrl($rowDetail['idDetailAbsensi']) ?>" class="btn btn-info">Detail</a></td>
+
+                                        <td><a href="detail/?data=<?= encryptUrl($rowDetail['idAbsensi']) ?>" class="btn btn-info">Detail</a></td>
                                     </tr>
                                 <?php } ?>
                             <?php } else { ?>
@@ -114,14 +103,13 @@ $absensi = query($query, $params);
                                             <div class="iq-alert-icon">
                                                 <i class="ri-alert-line"></i>
                                             </div>
-                                            <div class="iq-alert-text">Data Not Found!</div>
+                                            <div class="iq-alert-text">Tidak Ada Data!</div>
                                         </div>
                                     </td>
                                 </tr>
                             <?php } ?>
                         </tbody>
                     </table>
-                </div>
             </div>
         </div>
 
