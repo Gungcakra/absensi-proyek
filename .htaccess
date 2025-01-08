@@ -1,0 +1,17 @@
+# Error 404 handling
+ErrorDocument 404 https://php-template.cakra-portfolio.my.id/error/404/
+
+# Error 500 handling
+ErrorDocument 500 https://php-template.cakra-portfolio.my.id/error/500/
+
+# Enable RewriteEngine
+RewriteEngine On
+RewriteBase /
+
+# Redirect 404 errors to custom 404 page
+RewriteCond %{REQUEST_URI} ^/404/$
+RewriteRule ^(.*)$ pages/404.php [L]
+
+# Redirect 500 errors to custom 500 page
+RewriteCond %{REQUEST_URI} ^/500/$
+RewriteRule ^(.*)$ pages/500.php [L]
