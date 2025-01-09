@@ -66,6 +66,7 @@ $absensi = query($query, $params);
                 Detail Absen
             </button>
             <div class="collapse" id="collapseTable<?= $key ?>">
+                <!-- <a href="laporan/?absen" class="btn-success p-1 rounded-sm text-center">Laporan Absen</a> -->
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -94,7 +95,8 @@ $absensi = query($query, $params);
                                     <td><?= timeStampToTanggalNamaBulan($rowDetail['tanggal']) ?></td>
 
                                     <td>
-                                        <div class="btn-group" role="group">
+                                        <a href="detail/?absen=<?= encryptUrl($rowDetail['idAbsensi']) ?>" class="btn-primary p-1 rounded-sm">Detail</a>
+                                        <!-- <div class="btn-group" role="group">
                                             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="false">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
@@ -110,7 +112,7 @@ $absensi = query($query, $params);
                                                     <i class="las la-file-alt"></i> Laporan
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </td>
                                 </tr>
                             <?php } ?>
