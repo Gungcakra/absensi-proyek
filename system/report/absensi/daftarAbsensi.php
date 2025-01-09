@@ -56,7 +56,7 @@ $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
 
 ?>
 
-<h4 class="mt-2"><?= $namaProyek ?></h4>
+<h4 class="mt-2"><?= $namaProyek ?> - <?= namaBulan(intval($bulan)) ?> <?= $tahun?></h4>
 
 <?php
 if ($rentangTanggal) {

@@ -3,7 +3,7 @@ session_start();
 require_once "../../../../library/config.php";
 require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
-require_once '../../../../vendor/autoload.php'; 
+require_once '../../../../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 
@@ -57,6 +57,7 @@ ob_start();
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Absensi Proyek</title>
     <style>
@@ -65,17 +66,23 @@ ob_start();
             width: 100%;
             page-break-after: always;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        th, td {
+
+        th,
+        td {
             padding: 5px;
             text-align: center;
         }
     </style>
 </head>
+
 <body>
-    <h4 style="text-align: center;"><?= $namaProyek ?></h4>
+    <h4 style="text-align: center;"><?= $namaProyek ?> - <?= namaBulan(intval($bulan)) ?> <?= $tahun?></h4>
 
     <?php foreach ($rentangTanggal as $range) { ?>
         <table>
@@ -100,14 +107,29 @@ ob_start();
                     <tr>
                         <td><?= $tukang['nama'] ?></td>
                         <?php
-                        $hadirCount = 0;
+                        $hadirCount = 0.0;
                         $totalBon = 0;
                         foreach ($range as $day) {
                             $tanggal = "$tahun-$bulan-" . str_pad($day, 2, '0', STR_PAD_LEFT);
-                            $status = isset($absensiMap[$tanggal][$tukang['idTukang']]) ? 'Hadir' : '-';
-                            if ($status === 'Hadir') {
-                                $hadirCount++;
+                            $status = ' - ';
+                            $hadirIncrement = 0.0;
+                            if (isset($absensiMap[$tanggal][$tukang['idTukang']])) {
+                                $setHariQuery = query(
+                                    "SELECT setHari FROM absensi 
+                                 WHERE idTukang = ? AND DATE(tanggal) = ?",
+                                    [$tukang['idTukang'], $tanggal]
+                                );
+                                $setHari = $setHariQuery[0]['setHari'] ?? 0;
+
+                                if ($setHari == 1) {
+                                    $hadirIncrement = 0.5;
+                                    $status = 'setHari';
+                                } else {
+                                    $hadirIncrement = 1.0;
+                                    $status = 'Hadir';
+                                }
                             }
+                            $hadirCount += $hadirIncrement;
                             echo "<td>$status</td>";
                             $bonQuery = query(
                                 "SELECT SUM(nominal) AS totalBon 
@@ -116,7 +138,6 @@ ob_start();
                                 [$tukang['idTukang'], $tanggal]
                             );
                             $totalBon += $bonQuery[0]['totalBon'] ?? 0;
-
                         }
                         $gajiHarian = $tukang['gaji'] ?? 0;
                         $totalGaji = $gajiHarian * $hadirCount;
@@ -134,6 +155,7 @@ ob_start();
         <br>
     <?php } ?>
 </body>
+
 </html>
 <?php
 $html = ob_get_clean();
@@ -145,5 +167,5 @@ $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
 // Kirim PDF ke browser untuk diunduh
-$dompdf->stream("Laporan Absesi Tukang.pdf", ["Attachment" => true]);
+$dompdf->stream("Laporan Absesi Tukang {$namaProyek} - " . namaBulan(intval($bulan)) . " {$tahun}" . ".pdf", ["Attachment" => true]);
 ?>

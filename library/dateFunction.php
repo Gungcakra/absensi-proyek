@@ -18,30 +18,18 @@ function tanggalTerbilang($date) {
     $dateTime = DateTime::createFromFormat('Y-m-d', $date);
 
     $bulan = [
-        1 => 'Jan', 
-        2 => 'Feb', 
-        3 => 'Mar', 
-        4 => 'Apr', 
-        5 => 'May', 
-        6 => 'Jun',
-        7 => 'Jul', 
-        8 => 'Aug', 
-        9 => 'Sep', 
-        10 => 'Oct', 
-        11 => 'Nov', 
-        12 => 'Dec',
-        '01' => 'Jan', 
-        '02' => 'Feb', 
-        '03' => 'Mar', 
-        '04' => 'Apr', 
-        '05' => 'May', 
-        '06' => 'Jun',
-        '07' => 'Jul', 
-        '08' => 'Aug', 
-        '09' => 'Sep', 
-        '10' => 'Oct', 
-        '11' => 'Nov', 
-        '12' => 'Dec'
+        1 => 'Januari', 
+        2 => 'Februari', 
+        3 => 'Maret', 
+        4 => 'Apri;', 
+        5 => 'Mei', 
+        6 => 'Juni',
+        7 => 'Juli', 
+        8 => 'Agustus', 
+        9 => 'September', 
+        10 => 'Oktober', 
+        11 => 'November', 
+        12 => 'Desember'
     ];
 
     $hari = $dateTime->format('d');
@@ -54,18 +42,18 @@ function tanggalTerbilang($date) {
 // NAMA BULAN
 function namaBulan($nomorBulan) {
     $namaBulan = [
-        1 => 'Jan',
-        2 => 'Feb',
-        3 => 'Mar',
-        4 => 'Apr',
-        5 => 'Mei',
-        6 => 'Jun',
-        7 => 'Jul',
-        8 => 'Agt',
-        9 => 'Sep',
-        10 => 'Okt',
-        11 => 'Nov',
-        12 => 'Des'
+        1 => 'Januari', 
+        2 => 'Februari', 
+        3 => 'Maret', 
+        4 => 'Apri;', 
+        5 => 'Mei', 
+        6 => 'Juni',
+        7 => 'Juli', 
+        8 => 'Agustus', 
+        9 => 'September', 
+        10 => 'Oktober', 
+        11 => 'November', 
+        12 => 'Desember'
     ];
 
     return isset($namaBulan[$nomorBulan]) ? $namaBulan[$nomorBulan] : '';
