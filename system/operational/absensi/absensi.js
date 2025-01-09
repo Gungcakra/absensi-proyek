@@ -91,6 +91,32 @@ function prosesAbsensi(data) {
   });
 }
 
+function setHari(data) {
+  const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
+  const idTukang = data.idTukang;
+  const idProyek = data.idProyek;
+  $.ajax({
+    url: "../prosesAbsensi.php",
+    type: "post",
+    enctype: "multipart/form-data",
+    data: {
+      flagAbsensi: "setHari",
+      idAbsensi: idAbsensi,
+      idTukang: idTukang,
+      idProyek: idProyek,
+
+    },
+    dataType: "json",
+    success: function (data) {
+      const { status, pesan } = data;
+      notifikasi(status, pesan);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error("Error:", textStatus, errorThrown);
+    },
+  });
+}
+
 
 function cariDaftarAbsensi() {
   const searchQuery = $("#searchQuery").val();

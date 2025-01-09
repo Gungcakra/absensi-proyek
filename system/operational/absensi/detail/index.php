@@ -23,6 +23,7 @@ if ($idAbsensi) {
     tukang.jenis,
     absensi.waktuMasuk,
     absensi.waktuKeluar,
+    absensi.setHari,
     IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
 FROM tukang
 LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
@@ -43,6 +44,7 @@ WHERE tukang.idProyek = ?",
             tukang.jenis,
             absensi.waktuMasuk,
             absensi.waktuKeluar,
+            absensi.setHari,
             IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
         FROM tukang
         LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
@@ -107,6 +109,7 @@ WHERE tukang.idProyek = ?",
                                 <th>Bidang</th>
                                 <th>Jenis</th>
                                 <th>Status</th>
+                                <th>Set Hari</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,6 +127,9 @@ WHERE tukang.idProyek = ?",
                                                 </label>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="setHari" id="" setHari" onclick="setHari(<?= htmlspecialchars(json_encode($row)) ?>)" style="width: 20px; height: 20px;" <?= $row['setHari'] === 1 ? 'checked' : '' ?>>
                                     </td>
                                 </tr>
                             <?php } ?>

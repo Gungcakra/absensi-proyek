@@ -19,6 +19,11 @@ function deleteAbsensi($idAbsensi) {
     $query = "DELETE FROM absensi WHERE idAbsensi = ?";
     return query($query, [$idAbsensi]);
 }
+function setHari($idAbsensi) {
+    $query = "UPDATE absensi SET setHari = CASE WHEN setHari = 1 THEN 0 ELSE 1 END WHERE idAbsensi = ?";
+    return query($query, [$idAbsensi]);
+}
+
 
 if (isset($_POST['flagAbsensi'])) {
     $flagAbsensi = $_POST['flagAbsensi'];
@@ -41,6 +46,14 @@ if (isset($_POST['flagAbsensi'])) {
             } else {
                 $response = ["status" => false, "pesan" => "Failed to add Absensi."];
             }
+        }
+    } else if ($flagAbsensi === 'setHari') {
+        $idAbsensi = $_POST['idAbsensi'];
+        $result = setHari($idAbsensi);
+        if ($result > 0) {
+            $response = ["status" => true, "pesan" => "Update Setengah Hari!"];
+        } else {
+            $response = ["status" => false, "pesan" => "Failed to update Hari."];
         }
     }
 
