@@ -29,16 +29,16 @@ if ($flagTukang === 'cari') {
     }
 }
 
-$totalQuery = "SELECT COUNT(*) as total FROM tukang INNER JOIN bidang ON tukang.idBidang = bidang.idBidang" . $conditions;
+$totalQuery = "SELECT COUNT(*) as total FROM tukang INNER JOIN proyek ON tukang.idProyek = proyek.idProyek" . $conditions;
 $totalResult = query($totalQuery, $params);
 $totalRecords = $totalResult[0]['total'];
 $totalPages = ceil($totalRecords / $limit);
 
 $query = "SELECT 
                 tukang.*,
-                bidang.*
+                proyek.namaProyek
           FROM tukang 
-          INNER JOIN bidang ON tukang.idBidang = bidang.idBidang"
+          INNER JOIN proyek ON tukang.idProyek = proyek.idProyek"
           . $conditions . " ORDER BY tukang.nama ASC LIMIT ? OFFSET ?";
 
 
@@ -54,8 +54,9 @@ $tukang = query($query, $params);
             <th>#</th>
             <th style="min-width: 100px">Action</th>
             <th>Nama</th>
-            <th>Tipe</th>
+            <th>Bidang</th>
             <th>Jenis</th>
+            <th>Proyek</th>
             <th>Gaji</th>
         </tr>
     </thead>
@@ -85,8 +86,9 @@ $tukang = query($query, $params);
                     </div>
                 </td>
                 <td><?= $row['nama'] ?></td>
-                <td><?= $row['tipe'] ?></td>
+                <td><?= $row['bidang'] ?></td>
                 <td><?= $row['jenis'] ?></td>
+                <td><?= $row['namaProyek'] ?></td>
                 <td><?= rupiah($row['gaji'] )?></td>
         </tr>
         
