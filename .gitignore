@@ -1,2 +1,3 @@
 # Ignore config.php in the library directory
 /library/databaseConfig.php
+/vendor/

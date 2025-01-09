@@ -128,6 +128,33 @@ function cariDaftarAbsensi() {
   }
 }
 
+function generateLaporan() {
+  const idProyek = $("#idProyek").val();
+  const bulanTahun = $("#bulanTahun").val();
+
+  const form = $('<form>', {
+    action: 'laporan/',
+    method: 'post',
+    target: '_blank'
+  }).append($('<input>', {
+    type: 'hidden',
+    name: 'idProyek',
+    value: idProyek
+  })).append($('<input>', {
+    type: 'hidden',
+    name: 'bulanTahun',
+    value: bulanTahun
+  })).append($('<input>', {
+    type: 'hidden',
+    name: 'flagAbsensi',
+    value: 'cari'
+  }));
+
+  $('body').append(form);
+  form.submit();
+  form.remove();
+}
+
 
 
 function notifikasi(status, pesan) {

@@ -111,7 +111,7 @@ checkUserSession($db);
                                                 <button class="btn btn-primary mr-1" href="javascript:void();">
                                                     Excel
                                                 </button> -->
-                                            <!-- <a class="btn btn-primary mr-1" href="./form/">+ Absensi</a> -->
+                                            <a class="btn btn-success mr-1 text-white" onclick="generateLaporan()"> <i class="las la-file-pdf"></i> Laporan</a>
 
                                         </div>
                                     </div>
