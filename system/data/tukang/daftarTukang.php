@@ -95,7 +95,7 @@ $tukang = query($query, $params);
     <?php endforeach; ?>
     <?php } else { ?>
         <tr>
-            <td colspan="6" class="text-center">No data found</td>
+            <td colspan="7" class="text-center">No data found</td>
         </tr>
     <?php } ?>
 

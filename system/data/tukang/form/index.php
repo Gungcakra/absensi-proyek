@@ -63,6 +63,10 @@ if ($idTukang) {
                                     <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['nama'] ?? '' ?>" autocomplete="off" placeholder="Nama">
                                 </div>
                                 <div class="col-md-6 d-flex flex-column">
+                                    <label for="">No Telp</label>
+                                    <input type="text" name="telp" id="telp" class="form-control" value="<?= $data['telp'] ?? '' ?>" autocomplete="off" placeholder="No Telp">
+                                </div>
+                                <div class="col-md-6 d-flex flex-column">
                                     <label for="alamat">Alamat</label>
                                     <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $data['alamat'] ?? '' ?>" autocomplete="off" placeholder="Alamat">
                                 </div>
@@ -82,19 +86,24 @@ if ($idTukang) {
                                     </select>
                                 </div>
                                 <div class="col-md-6 d-flex flex-column">
-                                    <label for="idBidang">Bidang</label>
-                                    <select class="form-control" id="idBidang" name="idBidang">
+                                    <label for="bidang">Bidang</label>
+                                    <select class="form-control" id="bidang" name="bidang">
                                         <option value="">Pilih Bidang</option>
-                                        <?php
-                                        $bidangList = query("SELECT * FROM bidang");
-                                        foreach ($bidangList as $bidang) {
-                                            $selected = ($data['idBidang'] ?? '') == $bidang['idBidang'] ? 'selected' : '';
-                                        ?>
-                                            <option value="<?= $bidang['idBidang'] ?>" <?= $selected ?>><?= $bidang['tipe'] ?> - <?= $bidang['jenis'] ?></option>
-                                        <?php
-                                        }
-                                        ?>
+                                        <option value="tukang" <?= ($data['bidang'] ?? '') == 'tukang' ? 'selected' : '' ?>>Tukang</option>
+                                        <option value="laden" <?= ($data['bidang'] ?? '') == 'laden' ? 'selected' : '' ?>>Laden</option>
                                     </select>
+                                </div>
+                                <div class="col-md-6 d-flex flex-column">
+                                    <label for="idBidang">Jenis</label>
+                                    <select class="form-control" id="jenis" name="jenis">
+                                        <option value="">Pilih Jenis</option>
+                                        <option value="harian" <?= ($data['jenis'] ?? '') == 'harian' ? 'selected' : '' ?>>Harian</option>
+                                        <option value="borongan" <?= ($data['jenis'] ?? '') == 'borongan' ? 'selected' : '' ?>>Borongan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 d-flex flex-column">
+                                    <label for="idBidang">Gaji</label>
+                                    <input type="number" name="gaji" id="gaji" class="form-control" value="<?= $data['gaji'] ?? '' ?>" autocomplete="off" placeholder="Gaji" onkeydown="return event.keyCode !== 38 && event.keyCode !== 40">
                                 </div>
                             </div>
                         </form>

@@ -9,9 +9,9 @@ function getLastTukang() {
     return $result[0]['idTukang'];
 }
 
-function addTukang($idBidang, $nama, $alamat, $idProyek) {
-    $query = "INSERT INTO tukang (idBidang, nama, alamat, idProyek) VALUES (?, ?, ?, ?)";
-    return query($query, [$idBidang, $nama, $alamat, $idProyek]);
+function addTukang($idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji) {
+    $query = "INSERT INTO tukang (idProyek, nama, alamat, telp, bidang, jenis, gaji) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    return query($query, [$idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji]);
 }
 
 function deleteTukang($idTukang) {
@@ -19,9 +19,9 @@ function deleteTukang($idTukang) {
     return query($query, [$idTukang]);
 }
 
-function updateTukang($idTukang, $idBidang, $nama, $alamat, $idProyek) {
-    $query = "UPDATE tukang SET idBidang = ?, nama = ?, alamat = ?, idProyek = ? WHERE idTukang = ?";
-    return query($query, [$idBidang, $nama, $alamat, $idProyek, $idTukang]);
+function updateTukang($idTukang, $idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji) {
+    $query = "UPDATE tukang SET idProyek = ?, nama = ?, alamat = ?, telp = ?, bidang = ?, jenis = ?, gaji = ? WHERE idTukang = ?";
+    return query($query, [$idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji, $idTukang]);
 }
 
 if (isset($_POST['flagTukang'])) {
@@ -30,11 +30,14 @@ if (isset($_POST['flagTukang'])) {
 
     switch ($flagTukang) {
         case 'add':
-            $idBidang = $_POST['idBidang'];
+            $idProyek = $_POST['idProyek'];
             $nama = $_POST['nama'];
             $alamat = $_POST['alamat'];
-            $idProyek = $_POST['idProyek'];
-            $result = addTukang($idBidang, $nama, $alamat, $idProyek);
+            $telp = $_POST['telp'];
+            $bidang = $_POST['bidang'];
+            $jenis = $_POST['jenis'];
+            $gaji = $_POST['gaji'];
+            $result = addTukang($idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Tukang added successfully!"];
             } else {
@@ -54,12 +57,15 @@ if (isset($_POST['flagTukang'])) {
 
         case 'update':
             $idTukang = $_POST['idTukang'];
-            $idBidang = $_POST['idBidang'];
+            $idProyek = $_POST['idProyek'];
             $nama = $_POST['nama'];
             $alamat = $_POST['alamat'];
-            $idProyek = $_POST['idProyek'];
-            $result = updateTukang($idTukang, $idBidang, $nama, $alamat, $idProyek);
-            if ($result) {
+            $telp = $_POST['telp'];
+            $bidang = $_POST['bidang'];
+            $jenis = $_POST['jenis'];
+            $gaji = $_POST['gaji'];
+            $result = updateTukang($idTukang, $idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji);
+            if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Tukang updated successfully!"];
             } else {
                 $response = ["status" => false, "pesan" => "Failed to update Tukang: " . mysqli_error($db)];
@@ -69,4 +75,3 @@ if (isset($_POST['flagTukang'])) {
 
     echo json_encode($response);
 }
-?>
