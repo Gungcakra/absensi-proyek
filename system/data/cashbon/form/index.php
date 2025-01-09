@@ -3,12 +3,12 @@ session_start();
 require_once "../../../../library/config.php";
 checkUserSession($db);
 
-$idTukang = $_GET['data'] ?? '';
-if ($idTukang) {
-    $data = query("SELECT * FROM tukang WHERE idTukang  = ?", [$idTukang])[0];
-    $flagTukang = 'update';
+$idCashbon = $_GET['data'] ?? '';
+if ($idCashbon) {
+    $data = query("SELECT * FROM cashbon WHERE idCashbon  = ?", [$idCashbon])[0];
+    $flagCashbon = 'update';
 } else {
-    $flagTukang = 'add';
+    $flagCashbon = 'add';
 }
 ?>
 
@@ -33,6 +33,9 @@ if ($idTukang) {
 
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body class=" color-light ">
@@ -54,61 +57,39 @@ if ($idTukang) {
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 bg-white p-2">
-                        <form id="formTukangInput">
+                        <form id="formCashbonInput">
                             <div class="form-row">
                                 <div class="col-md-6 d-flex flex-column">
-                                    <label for="tukangname">Nama</label>
-                                    <input type="hidden" name="flagTukang" id="flagTukang" value="<?= $flagTukang ?>">
-                                    <input type="hidden" name="idTukang" id="idTukang" value="<?= $idTukang ?>">
-                                    <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['nama'] ?? '' ?>" autocomplete="off" placeholder="Nama">
-                                </div>
-                                <div class="col-md-6 d-flex flex-column">
-                                    <label for="">No Telp</label>
-                                    <input type="text" name="telp" id="telp" class="form-control" value="<?= $data['telp'] ?? '' ?>" autocomplete="off" placeholder="No Telp">
-                                </div>
-                                <div class="col-md-6 d-flex flex-column">
-                                    <label for="alamat">Alamat</label>
-                                    <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $data['alamat'] ?? '' ?>" autocomplete="off" placeholder="Alamat">
-                                </div>
-                                <div class="col-md-6 d-flex flex-column">
-                                    <label for="idProyek">Proyek</label>
-                                    <select class="form-control" id="idProyek" name="idProyek">
-                                        <option value="">Pilih Proyek</option>
+                                    <input type="hidden" name="flagCashbon" id="flagCashbon" value="<?= $flagCashbon ?>">
+                                    <input type="hidden" name="idCashbon" id="idCashbon" value="<?= $idCashbon ?>">
+                                    <label for="idProyek">Tukang</label>
+                                    <select class="form-control select-tukang" id="idTukang" name="idTukang">
+                                        <option value="">Pilih Tukang</option>
                                         <?php
-                                        $proyekList = query("SELECT * FROM proyek");
-                                        foreach ($proyekList as $proyek) {
-                                            $selected = ($data['idProyek'] ?? '') == $proyek['idProyek'] ? 'selected' : '';
+                                        $tukangList = query("SELECT * FROM tukang");
+                                        foreach ($tukangList as $tukang) {
+                                            $selected = ($data['idTukang'] ?? '') == $tukang['idTukang'] ? 'selected' : '';
                                         ?>
-                                            <option value="<?= $proyek['idProyek'] ?>" <?= $selected ?>><?= $proyek['namaProyek'] ?></option>
+                                            <option value="<?= $tukang['idProyek'] ?>" <?= $selected ?>><?= $tukang['nama'] ?></option>
                                         <?php
                                         }
                                         ?>
                                     </select>
                                 </div>
                                 <div class="col-md-6 d-flex flex-column">
-                                    <label for="bidang">Bidang</label>
-                                    <select class="form-control" id="bidang" name="bidang">
-                                        <option value="">Pilih Bidang</option>
-                                        <option value="tukang" <?= ($data['bidang'] ?? '') == 'tukang' ? 'selected' : '' ?>>Tukang</option>
-                                        <option value="laden" <?= ($data['bidang'] ?? '') == 'laden' ? 'selected' : '' ?>>Laden</option>
-                                    </select>
+                                    <label for="nominal">Nominal</label>
+                                    <input type="number" name="nominal" id="nominal" class="form-control" value="<?= $data['nominal'] ?? '' ?>" autocomplete="off" placeholder="Nominal" onkeydown="return event.keyCode !== 38 && event.keyCode !== 40">
                                 </div>
                                 <div class="col-md-6 d-flex flex-column">
-                                    <label for="idBidang">Jenis</label>
-                                    <select class="form-control" id="jenis" name="jenis">
-                                        <option value="">Pilih Jenis</option>
-                                        <option value="harian" <?= ($data['jenis'] ?? '') == 'harian' ? 'selected' : '' ?>>Harian</option>
-                                        <option value="borongan" <?= ($data['jenis'] ?? '') == 'borongan' ? 'selected' : '' ?>>Borongan</option>
-                                    </select>
+                                    <label for="keterangan">Keterangan</label>
+                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?= $data['keterangan'] ?? '' ?>" autocomplete="off" placeholder="Keterangan">
                                 </div>
-                                <div class="col-md-6 d-flex flex-column">
-                                    <label for="idBidang">Gaji</label>
-                                    <input type="number" name="gaji" id="gaji" class="form-control" value="<?= $data['gaji'] ?? '' ?>" autocomplete="off" placeholder="Gaji" onkeydown="return event.keyCode !== 38 && event.keyCode !== 40">
-                                </div>
+                          
+                               
                             </div>
                         </form>
 
-                        <button type="button" class="btn btn-<?= $flagTukang === 'add' ? 'update' : 'info' ?> btn-primary m-1 mt-3" onclick="prosesTukang()"><i class="ri-save-3-line"></i>Simpan</button>
+                        <button type="button" class="btn btn-<?= $flagCashbon === 'add' ? 'update' : 'info' ?> btn-primary m-1 mt-3" onclick="prosesCashbon()"><i class="ri-save-3-line"></i>Simpan</button>
                     </div>
                 </div>
             </div>
@@ -141,10 +122,13 @@ if ($idTukang) {
     <script src="<?= BASE_URL_HTML ?>/assets/vendor/moment.min.js"></script>
 
     <!-- MAIN JS -->
-    <script src="<?= BASE_URL_HTML ?>/system/data/tukang/tukang.js"></script>
+    <script src="<?= BASE_URL_HTML ?>/system/data/cashbon/cashbon.js"></script>
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 
 </html>

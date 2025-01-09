@@ -6,7 +6,7 @@ require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 //CEK USER
 checkUserSession($db);
 
-$flagTukang = isset($_POST['flagTukang']) ? $_POST['flagTukang'] : '';
+$flagCashbon = isset($_POST['flagCashbon']) ? $_POST['flagCashbon'] : '';
 $searchQuery = isset($_POST['searchQuery']) ? $_POST['searchQuery'] : '';
 $roleId = isset($_POST['roleId']) ? $_POST['roleId'] : '';
 $limit = isset($_POST['limit']) ? $_POST['limit'] : 10;
@@ -15,7 +15,7 @@ $offset = ($page - 1) * $limit;
 $conditions = '';
 $params = [];
 
-if ($flagTukang === 'cari') {
+if ($flagCashbon === 'cari') {
 
     // if (!empty($roleId)) {
     //   $searchQuery = '';
@@ -29,43 +29,40 @@ if ($flagTukang === 'cari') {
     }
 }
 
-$totalQuery = "SELECT COUNT(*) as total FROM tukang INNER JOIN proyek ON tukang.idProyek = proyek.idProyek" . $conditions;
+$totalQuery = "SELECT COUNT(*) as total FROM cashbon INNER JOIN tukang ON cashbon.idTukang = tukang.idTukang" . $conditions;
 $totalResult = query($totalQuery, $params);
 $totalRecords = $totalResult[0]['total'];
 $totalPages = ceil($totalRecords / $limit);
 
 $query = "SELECT 
-                tukang.*,
-                proyek.namaProyek
-          FROM tukang 
-          INNER JOIN proyek ON tukang.idProyek = proyek.idProyek"
+                cashbon.*,
+                tukang.nama AS namaTukang
+          FROM cashbon 
+          INNER JOIN tukang ON cashbon.idTukang = tukang.idTukang"
           . $conditions . " ORDER BY tukang.nama ASC LIMIT ? OFFSET ?";
 
 
 $params[] = $limit;
 $params[] = $offset;
-$tukang = query($query, $params);
+$cashbon = query($query, $params);
 ?>
 
-<table id="tukang-list-table" class="table table-striped dataTable mt-4" role="grid"
-    aria-describedby="tukang-list-page-info">
+<table id="cashbon-list-table" class="table table-striped dataTable mt-4" role="grid"
+    aria-describedby="cashbon-list-page-info">
     <thead>
         <tr class="ligth">
             <th>#</th>
             <th style="min-width: 100px">Action</th>
             <th>Nama</th>
-            <th>No Telp</th>
-            <th>Alamat</th>
-            <th>Bidang</th>
-            <th>Jenis</th>
-            <th>Proyek</th>
-            <th>Gaji</th>
+            <th>Nominal</th>
+            <th>Keterangan</th>
+            <th>Tanggal</th>
         </tr>
     </thead>
     <tbody>
-       <?php if($tukang){
+       <?php if($cashbon){
         ?>
-         <?php foreach ($tukang as $key => $row): ?>
+         <?php foreach ($cashbon as $key => $row): ?>
         <tr>
                 <td><?= $key + 1 ?></td>
                 <td>
@@ -76,24 +73,21 @@ $tukang = query($query, $params);
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         <!-- <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Add">
-                            <i class="ri-tukang-add-line mr-0"></i> Add
+                            <i class="ri-cashbon-add-line mr-0"></i> Add
                         </a> -->
-                        <a class="dropdown-item" href="form/?data=<?= $row['idTukang'] ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                        <a class="dropdown-item" href="form/?data=<?= $row['idCashbon'] ?>" data-toggle="tooltip" data-placement="top" title="Edit">
                             <i class="ri-pencil-line mr-0"></i> Edit
                         </a>
-                        <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteTukang(<?= $row['idTukang'] ?>)">
+                        <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCashbon(<?= $row['idCashbon'] ?>)">
                             <i class="ri-delete-bin-line mr-0"></i> Delete
                         </a>
                     </div>
                     </div>
                 </td>
-                <td><?= $row['nama'] ?></td>
-                <td><?= $row['telp'] ?></td>
-                <td><?= $row['alamat'] ?></td>
-                <td><?= $row['bidang'] ?></td>
-                <td><?= $row['jenis'] ?></td>
-                <td><?= $row['namaProyek'] ?></td>
-                <td><?= rupiah($row['gaji'] )?></td>
+                <td><?= $row['namaTukang'] ?></td>
+                <td><?= rupiah($row['nominal']) ?></td>
+                <td><?= $row['keterangan'] ?></td>
+                <td><?= $row['tanggal'] ?></td>
         </tr>
         
     <?php endforeach; ?>
@@ -106,7 +100,7 @@ $tukang = query($query, $params);
     </tbody>
 </table>
 
-<div id="tukang-list-page-info" class="col-md-6" id="pagination">
+<div id="cashbon-list-page-info" class="col-md-6" id="pagination">
     <span>Showing <?= $offset + 1 ?> to <?= min($offset + $limit, $totalRecords) ?> of <?= $totalRecords ?> entries</span>
 </div>
 <div class="col-md-6" id="pagination">

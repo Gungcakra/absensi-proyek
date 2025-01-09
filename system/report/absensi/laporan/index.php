@@ -101,6 +101,7 @@ ob_start();
                         <td><?= $tukang['nama'] ?></td>
                         <?php
                         $hadirCount = 0;
+                        $totalBon = 0;
                         foreach ($range as $day) {
                             $tanggal = "$tahun-$bulan-" . str_pad($day, 2, '0', STR_PAD_LEFT);
                             $status = isset($absensiMap[$tanggal][$tukang['idTukang']]) ? 'Hadir' : '-';
@@ -108,15 +109,24 @@ ob_start();
                                 $hadirCount++;
                             }
                             echo "<td>$status</td>";
+                            $bonQuery = query(
+                                "SELECT SUM(nominal) AS totalBon 
+                                 FROM cashbon 
+                                 WHERE idTukang = ? AND DATE(tanggal) = ?",
+                                [$tukang['idTukang'], $tanggal]
+                            );
+                            $totalBon += $bonQuery[0]['totalBon'] ?? 0;
+
                         }
                         $gajiHarian = $tukang['gaji'] ?? 0;
                         $totalGaji = $gajiHarian * $hadirCount;
+                        $sisa = $totalGaji - $totalBon;
                         ?>
                         <td><?= $hadirCount ?></td>
                         <td><?= rupiah($gajiHarian) ?></td>
                         <td><?= rupiah($totalGaji) ?></td>
-                        <td>Bon</td>
-                        <td>Sisa</td>
+                        <td><?= rupiah($totalBon) ?></td>
+                        <td><?= rupiah($sisa) ?></td>
                     </tr>
                 <?php } ?>
             </tbody>

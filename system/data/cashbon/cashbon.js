@@ -1,35 +1,37 @@
 // document.addEventListener("DOMContentLoaded", function () {
-//   fetch("daftarTukang.php")
+//   fetch("daftarCashbon.php")
 //     .then((response) => response.text())
 //     .then((data) => {
-//       document.getElementById("daftarTukang").innerHTML = data;
+//       document.getElementById("daftarCashbon").innerHTML = data;
 //     })
-//     .catch((error) => console.error("Error loading daftarTukang:", error));
+//     .catch((error) => console.error("Error loading daftarCashbon:", error));
 //   if (document.readyState === "complete") {
-//     daftarTukang();
+//     daftarCashbon();
 //   }
 // });
 document.addEventListener("DOMContentLoaded", function (event) {
-  daftarTukang();
+  daftarCashbon();
+});
+$(document).ready(function () {
+  $(".select-tukang").select2();
 });
 
-function daftarTukang() {
+function daftarCashbon() {
   $.ajax({
-    url: "daftarTukang.php",
+    url: "daftarCashbon.php",
     type: "post",
     data: {
-      flagTukang: "daftar",
+      flagCashbon: "daftar",
     },
     beforeSend: function () {},
     success: function (data, status) {
-      $("#daftarTukang").html(data);
+      $("#daftarCashbon").html(data);
       $("#pagination").html($(data).find("#pagination").html());
     },
   });
 }
 
-
-function deleteTukang(id) {
+function deleteCashbon(id) {
   Swal.fire({
     title: "Are You Sure?",
     text: "Once canceled, the process cannot be undone!",
@@ -40,18 +42,18 @@ function deleteTukang(id) {
   }).then(function (result) {
     if (result.isConfirmed) {
       $.ajax({
-        url: "prosesTukang.php",
+        url: "prosesCashbon.php",
         type: "post",
         data: {
-          idTukang: id,
-          flagTukang: "delete",
+          idCashbon: id,
+          flagCashbon: "delete",
         },
         dataType: "json",
 
         success: function (data) {
           const { status, pesan } = data;
           notifikasi(status, pesan);
-          daftarTukang();
+          daftarCashbon();
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.error("Error:", textStatus, errorThrown);
@@ -68,25 +70,25 @@ function loadPage(pageNumber) {
   const limit = $("#limit").val();
   $.ajax({
     type: "POST",
-    url: "daftarTukang.php",
+    url: "daftarCashbon.php",
     data: {
-      flagTukang: "cari",
+      flagCashbon: "cari",
       page: pageNumber,
       searchQuery: $("#searchQuery").val(),
       limit: limit,
     },
     success: function (data) {
-      $("#daftarTukang").html(data);
+      $("#daftarCashbon").html(data);
     },
   });
 }
 
-function prosesTukang() {
-  const formTukang = $("#formTukangInput")[0];
-  const dataForm = new FormData(formTukang);
+function prosesCashbon() {
+  const formCashbon = $("#formCashbonInput")[0];
+  const dataForm = new FormData(formCashbon);
 
   $.ajax({
-    url: "../prosesTukang.php",
+    url: "../prosesCashbon.php",
     type: "post",
     enctype: "multipart/form-data",
     processData: false,
@@ -97,7 +99,7 @@ function prosesTukang() {
       const { status, pesan } = data;
       notifikasi(status, pesan);
       if (status) {
-        setTimeout(function() {
+        setTimeout(function () {
           window.location.href = "../";
         }, 500); // Delay the redirect to allow the notification to show
       }
@@ -106,44 +108,40 @@ function prosesTukang() {
       console.error("Error:", textStatus, errorThrown);
     },
   });
-  
 }
 
-
-function cariDaftarTukang() {
+function cariDaftarCashbon() {
   const searchQuery = $("#searchQuery").val();
   console.log(searchQuery);
   const limit = $("#limit").val();
   if (searchQuery || limit) {
     $.ajax({
-      url: "daftarTukang.php",
+      url: "daftarCashbon.php",
       type: "post",
       data: {
         searchQuery: searchQuery,
         limit: limit,
-        flagTukang: "cari",
+        flagCashbon: "cari",
       },
       beforeSend: function () {},
       success: function (data, status) {
-        $("#daftarTukang").html(data);
+        $("#daftarCashbon").html(data);
       },
     });
   } else {
     $.ajax({
-      url: "daftarTukang.php",
+      url: "daftarCashbon.php",
       type: "post",
       data: {
-        flagTukang: "daftar",
+        flagCashbon: "daftar",
       },
       beforeSend: function () {},
       success: function (data, status) {
-        $("#daftarTukang").html(data);
+        $("#daftarCashbon").html(data);
       },
     });
   }
 }
-
-
 
 function notifikasi(status, pesan) {
   if (status === true) {

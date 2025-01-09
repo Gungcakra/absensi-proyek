@@ -54,7 +54,7 @@ checkUserSession($db);
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Daftar Tukang</h4>
+                                    <h4 class="card-title">Daftar Cashbon</h4>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -68,11 +68,11 @@ checkUserSession($db);
                                                         <input type="text" class="form-control" id="searchQuery" placeholder="Search"
                                                             name="searchQuery"
                                                             autocomplete="off"
-                                                            onkeyup="cariDaftarTukang()"
+                                                            onkeyup="cariDaftarCashbon()"
                                                             aria-controls="user-list-table">
                                                     </div>
                                                     <div class="col-md-2 m-0 p-0 ml-2">
-                                                            <select class="custom-select" id="limit" name="limit" onclick="cariDaftarTukang()">
+                                                            <select class="custom-select" id="limit" name="limit" onclick="cariDaftarCashbon()">
                                                                 <option value="10">10</option>
                                                                 <option value="20">20</option>
                                                                 <option value="50">50</option>
@@ -91,12 +91,12 @@ checkUserSession($db);
                                                 <button class="btn btn-primary mr-1" href="javascript:void();">
                                                     Excel
                                                 </button> -->
-                                                <a class="btn btn-primary mr-1" href="./form/">+ Tukang</a>
+                                                <a class="btn btn-primary mr-1" href="./form/">+ Cashbon</a>
 
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="daftarTukang" class="w-100">
+                                    <div id="daftarCashbon" class="w-100">
 
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@ checkUserSession($db);
     <script src="<?= BASE_URL_HTML ?>/assets/vendor/moment.min.js"></script>
     <!-- MAIN JS -->
 
-    <script src="<?= BASE_URL_HTML ?>/system/data/tukang/tukang.js"></script>
+    <script src="<?= BASE_URL_HTML ?>/system/data/cashbon/cashbon.js"></script>
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
