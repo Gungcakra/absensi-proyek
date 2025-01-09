@@ -96,7 +96,7 @@ WHERE tukang.idProyek = ?",
 
         <div class="content-page">
             <div class="container-fluid bg-white p-4 rouned-md">
-                <h4>Absensi Proyek</h4>
+                <p class="font-size-20 font-weight-bold">Absensi Proyek - <?= tanggalTerbilang($tanggalAbsensi) ?></p>
                 <div class="row">
                     <table class="table table-striped dataTable mt-4" role="grid"
                         aria-describedby="tukang-list-page-info">

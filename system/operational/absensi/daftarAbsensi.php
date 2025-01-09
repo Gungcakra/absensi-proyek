@@ -66,16 +66,16 @@ $absensi = query($query, $params);
                 Detail Absen
             </button>
             <div class="collapse" id="collapseTable<?= $key ?>">
-            <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                          $Absensi = query(
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $Absensi = query(
                             "SELECT 
                                 MIN(idAbsensi) AS idAbsensi, 
                                 tanggal, 
@@ -85,31 +85,49 @@ $absensi = query($query, $params);
                              GROUP BY tanggal ORDER BY tanggal DESC ",
                             [$row['idProyek']]
                         );
-                        
 
-                            if ($Absensi) {
-                                foreach ($Absensi as $key => $rowDetail) {
-                            ?>
-                                    <tr>
-                                        <td><?= timeStampToTanggalNamaBulan($rowDetail['tanggal']) ?></td>
 
-                                        <td><a href="detail/?absen=<?= encryptUrl($rowDetail['idAbsensi']) ?>" class="btn btn-info">Detail</a></td>
-                                    </tr>
-                                <?php } ?>
-                            <?php } else { ?>
+                        if ($Absensi) {
+                            foreach ($Absensi as $key => $rowDetail) {
+                        ?>
                                 <tr>
-                                    <td colspan="2" class="text-center">
-                                        <div class="alert alert-warning" role="alert">
-                                            <div class="iq-alert-icon">
-                                                <i class="ri-alert-line"></i>
+                                    <td><?= timeStampToTanggalNamaBulan($rowDetail['tanggal']) ?></td>
+
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings">
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                                </svg>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <a class="dropdown-item" href="detail/?absen=<?= encryptUrl($rowDetail['idAbsensi']) ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                    <i class="las la-list-ul"></i> Detail
+                                                </a>
+                                                <a class="dropdown-item" href="laporan/?absen=<?= encryptUrl($rowDetail['idAbsensi']) ?>" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="las la-file-alt"></i> Laporan
+                                                </a>
                                             </div>
-                                            <div class="iq-alert-text">Tidak Ada Data!</div>
                                         </div>
                                     </td>
                                 </tr>
                             <?php } ?>
-                        </tbody>
-                    </table>
+                        <?php } else { ?>
+                            <tr>
+                                <td colspan="2" class="text-center">
+                                    <div class="alert alert-warning" role="alert">
+                                        <div class="iq-alert-icon">
+                                            <i class="ri-alert-line"></i>
+                                        </div>
+                                        <div class="iq-alert-text">Tidak Ada Data!</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 

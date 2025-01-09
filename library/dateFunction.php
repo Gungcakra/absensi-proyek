@@ -72,3 +72,12 @@ function timeStampToDate($timestamp) {
     $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $timestamp);
     return $dateTime->format('Y-m-d');
 }
+function getDateFromDate($date){
+    $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+    return $dateTime->format('d');
+}
+function dateToMonthName($date){
+    $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+    $monthNumber = (int)$dateTime->format('m');
+    return namaBulan($monthNumber);
+}
