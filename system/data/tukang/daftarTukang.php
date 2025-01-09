@@ -54,6 +54,8 @@ $tukang = query($query, $params);
             <th>#</th>
             <th style="min-width: 100px">Action</th>
             <th>Nama</th>
+            <th>No Telp</th>
+            <th>Alamat</th>
             <th>Bidang</th>
             <th>Jenis</th>
             <th>Proyek</th>
@@ -86,6 +88,8 @@ $tukang = query($query, $params);
                     </div>
                 </td>
                 <td><?= $row['nama'] ?></td>
+                <td><?= $row['telp'] ?></td>
+                <td><?= $row['alamat'] ?></td>
                 <td><?= $row['bidang'] ?></td>
                 <td><?= $row['jenis'] ?></td>
                 <td><?= $row['namaProyek'] ?></td>
