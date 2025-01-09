@@ -62,6 +62,28 @@
                     'active' => $_SERVER['REQUEST_URI'] == BASE_URL_HTML . '/system/operational/absensi/'
                 ],
             ]
+            ],
+        [
+            'title' => 'Laporan',
+            'icon' => '<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19V6a1 1 0 0 1 1-1h4.032a1 1 0 0 1 .768.36l1.9 2.28a1 1 0 0 0 .768.36H16a1 1 0 0 1 1 1v1M3 19l3-8h15l-3 8H3Z"/>
+</svg>
+
+',
+            'url' => '#',
+            'active' => false,
+            'submenu' => [
+                [
+                    'title' => 'Absensi',
+                    'icon' => '<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m4 8h6m-6-4h6m4-8v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+</svg>
+
+',
+                    'url' => BASE_URL_HTML . '/system/report/absensi/',
+                    'active' => $_SERVER['REQUEST_URI'] == BASE_URL_HTML . '/system/report/absensi/'
+                ],
+            ]
         ]
     ];
     ?>
