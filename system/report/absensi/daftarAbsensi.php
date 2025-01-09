@@ -11,7 +11,13 @@ $idProyek = $_POST['idProyek'] ?? '';
 $bulanTahunAbsensi = $_POST['bulanTahun'] ?? '';
 
 if (empty($idProyek) || empty($bulanTahunAbsensi)) {
-    die("Error: idProyek atau bulanTahunAbsensi tidak boleh kosong.");
+    die('<div class="alert alert-warning mt-2" role="alert">
+        <div class="iq-alert-icon">
+            <i class="ri-alert-line"></i>
+        </div>
+        <div class="iq-alert-text">Pilih Periode dan Proyek Terlebih Dahulu!</div>
+    </div>');
+    
 }
 
 // Pisahkan bulan dan tahun dari $bulanTahunAbsensi
@@ -53,7 +59,9 @@ $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
 
 <h4 class="mt-2"><?= $namaProyek ?></h4>
 
-<?php foreach ($rentangTanggal as $range) { ?>
+<?php 
+if($rentangTanggal){
+foreach ($rentangTanggal as $range) { ?>
     <table border="1" cellspacing="0" cellpadding="5" style="margin-top: 20px; width: 100%;">
         <thead>
             <tr>
@@ -97,4 +105,11 @@ $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
             <?php } ?>
         </tbody>
     </table>
+<?php }}else{ ?>
+    <div class="alert alert-warning mt-2" role="alert">
+        <div class="iq-alert-icon">
+            <i class="ri-alert-line"></i>
+        </div>
+        <div class="iq-alert-text">Data Not Found!</div>
+    </div>
 <?php } ?>
