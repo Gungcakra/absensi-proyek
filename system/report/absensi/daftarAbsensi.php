@@ -58,7 +58,7 @@ $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
         <thead>
             <tr>
                 <th rowspan="2" style="text-align: center;">Nama</th>
-                <th colspan="<?= count($range) ?>" style="text-align: center;">Tanggal</th>
+                <th colspan="<?= count($range) ?>" style="text-align: center;">Tanggal <?= namaBulan($bulan) ?></th>
                 <th rowspan="2" style="text-align: center;">Jml</th>
                 <th rowspan="2" style="text-align: center;">Gaji Harian</th>
                 <th rowspan="2" style="text-align: center;">Total</th>
