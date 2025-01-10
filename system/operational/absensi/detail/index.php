@@ -106,8 +106,6 @@ WHERE tukang.idProyek = ?",
                             <tr>
                                 <th>NO</th>
                                 <th>Tukang</th>
-                                <th>Bidang</th>
-                                <th>Jenis</th>
                                 <th>Status</th>
                                 <th>Set Hari</th>
                             </tr>
@@ -117,8 +115,6 @@ WHERE tukang.idProyek = ?",
                                 <tr>
                                     <td><?= $key + 1 ?></td>
                                     <td><?= $row['namaTukang'] ?></td>
-                                    <td><?= $row['bidang'] ?></td>
-                                    <td><?= $row['jenis'] ?></td>
                                     <td>
                                         <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
                                             <div class="custom-switch-inner">
