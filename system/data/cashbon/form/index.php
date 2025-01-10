@@ -5,6 +5,7 @@ checkUserSession($db);
 
 $idCashbon = $_GET['data'] ?? '';
 if ($idCashbon) {
+    $idCashbon = decryptUrl($idCashbon);
     $data = query("SELECT * FROM cashbon WHERE idCashbon  = ?", [$idCashbon])[0];
     $flagCashbon = 'update';
 } else {

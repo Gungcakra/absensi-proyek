@@ -5,6 +5,7 @@ checkUserSession($db);
 
 $idUser = $_GET['data'] ?? '';
 if ($idUser) {
+    $idUser = decryptUrl($idUser);
     $data = query("SELECT * FROM user WHERE userId = ?", [$idUser])[0];
     $flagUser = 'update';
 } else {

@@ -5,6 +5,7 @@ checkUserSession($db);
 
 $idTukang = $_GET['data'] ?? '';
 if ($idTukang) {
+    $idTukang = decryptUrl($idTukang);
     $data = query("SELECT * FROM tukang WHERE idTukang  = ?", [$idTukang])[0];
     $flagTukang = 'update';
 } else {

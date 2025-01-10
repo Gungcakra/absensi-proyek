@@ -75,7 +75,7 @@ $cashbon = query($query, $params);
                         <!-- <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Add">
                             <i class="ri-cashbon-add-line mr-0"></i> Add
                         </a> -->
-                        <a class="dropdown-item" href="form/?data=<?= $row['idCashbon'] ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                        <a class="dropdown-item" href="form/?data=<?= encryptUrl($row['idCashbon']) ?>" data-toggle="tooltip" data-placement="top" title="Edit">
                             <i class="ri-pencil-line mr-0"></i> Edit
                         </a>
                         <a class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteCashbon(<?= $row['idCashbon'] ?>)">
