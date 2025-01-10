@@ -3,6 +3,8 @@ session_start();
 require_once __DIR__ . "/../../../library/config.php";
 checkUserSession($db);
 
+
+
 function getLastCashbon() {
     $query = "SELECT idCashbon FROM cashbon ORDER BY idCashbon DESC LIMIT 1";
     $result = query($query);
@@ -25,14 +27,14 @@ function updateCashbon($idCashbon, $idTukang, $keterangan, $nominal) {
 }
 
 if (isset($_POST['flagCashbon'])) {
-    $flagCashbon = $_POST['flagCashbon'];
+    $flagCashbon = sanitizeInput($_POST['flagCashbon']);
     $response = ["status" => false, "pesan" => "Invalid action"];
 
     switch ($flagCashbon) {
         case 'add':
-            $idTukang = $_POST['idTukang'];
-            $keterangan = $_POST['keterangan'];
-            $nominal = $_POST['nominal'];
+            $idTukang = sanitizeInput($_POST['idTukang']);
+            $keterangan = sanitizeInput($_POST['keterangan']);
+            $nominal = sanitizeInput($_POST['nominal']);
             $result = addCashbon($idTukang, $keterangan, $nominal);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Cashbon added successfully!"];
@@ -42,7 +44,7 @@ if (isset($_POST['flagCashbon'])) {
             break;
 
         case 'delete':
-            $idCashbon = $_POST['idCashbon'];
+            $idCashbon = sanitizeInput($_POST['idCashbon']);
             $result = deleteCashbon($idCashbon);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Cashbon deleted successfully!"];
@@ -52,10 +54,10 @@ if (isset($_POST['flagCashbon'])) {
             break;
 
         case 'update':
-            $idCashbon = $_POST['idCashbon'];
-            $idTukang = $_POST['idTukang'];
-            $keterangan = $_POST['keterangan'];
-            $nominal = $_POST['nominal'];
+            $idCashbon = sanitizeInput($_POST['idCashbon']);
+            $idTukang = sanitizeInput($_POST['idTukang']);
+            $keterangan = sanitizeInput($_POST['keterangan']);
+            $nominal = sanitizeInput($_POST['nominal']);
             $result = updateCashbon($idCashbon, $idTukang, $keterangan, $nominal);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Cashbon updated successfully!"];
@@ -67,3 +69,4 @@ if (isset($_POST['flagCashbon'])) {
 
     echo json_encode($response);
 }
+?>

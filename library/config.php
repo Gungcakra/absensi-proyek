@@ -103,3 +103,8 @@ function getCurrentDirectory()
 {
     return pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME);
 }
+
+
+function sanitizeInput($data) {
+    return htmlspecialchars(strip_tags(trim($data)));
+}

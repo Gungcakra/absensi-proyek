@@ -19,18 +19,18 @@ function deleteAbsensi($idAbsensi) {
     $query = "DELETE FROM absensi WHERE idAbsensi = ?";
     return query($query, [$idAbsensi]);
 }
+
 function setHari($idAbsensi) {
     $query = "UPDATE absensi SET setHari = CASE WHEN setHari = 1 THEN 0 ELSE 1 END WHERE idAbsensi = ?";
     return query($query, [$idAbsensi]);
 }
 
-
 if (isset($_POST['flagAbsensi'])) {
-    $flagAbsensi = $_POST['flagAbsensi'];
+    $flagAbsensi = sanitizeInput($_POST['flagAbsensi']);
     if ($flagAbsensi === 'absensi') {
-        $idTukang = $_POST['idTukang'];
-        $idProyek = $_POST['idProyek'];
-        $idAbsensi = $_POST['idAbsensi'];
+        $idTukang = sanitizeInput($_POST['idTukang']);
+        $idProyek = sanitizeInput($_POST['idProyek']);
+        $idAbsensi = sanitizeInput($_POST['idAbsensi']);
         
         if (!empty($idAbsensi)) {
             $result = deleteAbsensi($idAbsensi);
@@ -48,7 +48,7 @@ if (isset($_POST['flagAbsensi'])) {
             }
         }
     } else if ($flagAbsensi === 'setHari') {
-        $idAbsensi = $_POST['idAbsensi'];
+        $idAbsensi = sanitizeInput($_POST['idAbsensi']);
         $result = setHari($idAbsensi);
         if ($result > 0) {
             $response = ["status" => true, "pesan" => "Update Setengah Hari!"];

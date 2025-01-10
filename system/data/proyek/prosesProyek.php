@@ -19,17 +19,17 @@ function updateProyek($idProyek, $namaProyek, $namaPemilik, $tanggalMulai, $tang
 }
 
 if (isset($_POST['flagProyek'])) {
-    $flagProyek = $_POST['flagProyek'];
+    $flagProyek = sanitizeInput($_POST['flagProyek']);
     $response = ["status" => false, "pesan" => "Invalid action"];
 
     switch ($flagProyek) {
         case 'add':
-            $namaProyek = $_POST['namaProyek'];
-            $namaPemilik = $_POST['namaPemilik'];
-            $tanggalMulai = $_POST['tanggalMulai'];
-            $tanggalTarget = $_POST['tanggalTarget'];
-            $alamat = $_POST['alamat'];
-            $status = $_POST['status'];
+            $namaProyek = sanitizeInput($_POST['namaProyek']);
+            $namaPemilik = sanitizeInput($_POST['namaPemilik']);
+            $tanggalMulai = sanitizeInput($_POST['tanggalMulai']);
+            $tanggalTarget = sanitizeInput($_POST['tanggalTarget']);
+            $alamat = sanitizeInput($_POST['alamat']);
+            $status = sanitizeInput($_POST['status']);
             $result = addProyek($namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Proyek added successfully!"];
@@ -39,7 +39,7 @@ if (isset($_POST['flagProyek'])) {
             break;
 
         case 'delete':
-            $idProyek = $_POST['idProyek'];
+            $idProyek = sanitizeInput($_POST['idProyek']);
             $result = deleteProyek($idProyek);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Proyek deleted successfully!"];
@@ -49,13 +49,13 @@ if (isset($_POST['flagProyek'])) {
             break;
 
         case 'update':
-            $idProyek = $_POST['idProyek'];
-            $namaProyek = $_POST['namaProyek'];
-            $namaPemilik = $_POST['namaPemilik'];
-            $tanggalMulai = $_POST['tanggalMulai'];
-            $tanggalTarget = $_POST['tanggalTarget'];
-            $alamat = $_POST['alamat'];
-            $status = $_POST['status'];
+            $idProyek = sanitizeInput($_POST['idProyek']);
+            $namaProyek = sanitizeInput($_POST['namaProyek']);
+            $namaPemilik = sanitizeInput($_POST['namaPemilik']);
+            $tanggalMulai = sanitizeInput($_POST['tanggalMulai']);
+            $tanggalTarget = sanitizeInput($_POST['tanggalTarget']);
+            $alamat = sanitizeInput($_POST['alamat']);
+            $status = sanitizeInput($_POST['status']);
             $result = updateProyek($idProyek, $namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status);
             if ($result) {
                 $response = ["status" => true, "pesan" => "Proyek updated successfully!"];
