@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          <div class="container">
             <div class="row align-items-center justify-content-center height-self-center">
                <div class="col-lg-8">
-                  <h2 class="text-center text-primary">Absensi Proyek</h2>
+                  <h2 class="text-center text-primary">Absensi Proyek </h2>
                   <div class="card auth-card">
                      <div class="card-body p-0">
                         <div class="d-flex align-items-center auth-content">

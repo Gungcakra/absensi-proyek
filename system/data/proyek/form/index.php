@@ -84,8 +84,8 @@ if ($idProyek) {
                                     <label for="status">Status</label>
                                     <select class="form-control" id="status" name="status">
                                         <option value="">Pilih Status</option>
-                                        <option value="Proses" <?= ($data['status'] ?? '') == 'proses' ? 'selected' : '' ?>>Proses</option>
-                                        <option value="Selesai" <?= ($data['status'] ?? '') == 'selesai' ? 'selected' : '' ?>>Selesai</option>
+                                        <option value="Proses" <?= ($data['status'] ?? '') == 'Proses' ? 'selected' : '' ?>>Proses</option>
+                                        <option value="Selesai" <?= ($data['status'] ?? '') == 'S   elesai' ? 'selected' : '' ?>>Selesai</option>
                                     </select>
                                 </div>
                             </div>

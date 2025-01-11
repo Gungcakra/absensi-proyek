@@ -80,7 +80,7 @@ $user = query($query, $params);
     <?php endforeach; ?>
     <?php } else { ?>
         <tr>
-            <td colspan="3" class="text-center">No data found</td>
+            <td colspan="3" class="text-center">Data Tidak Ditemukan!</td>
         </tr>
     <?php } ?>
 
