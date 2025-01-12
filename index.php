@@ -5,37 +5,44 @@ require_once "./library/config.php";
 session_start();
 
 // Batasi percobaan login
-if (!isset($_SESSION['login_attempts'])) {
-    $_SESSION['login_attempts'] = 0;
-}
+function handleLogin() {
+   if (!isset($_SESSION['login_attempts'])) {
+      $_SESSION['login_attempts'] = 0;
+   }
 
-if ($_SESSION['login_attempts'] >= 3) {
-    die("Try Again Later.");
-}
+   if ($_SESSION['login_attempts'] >= 3) {
+      die("Try Again Later.");
+   }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $password = $_POST['password'];
+   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $username = trim($_POST['username']);
+      $password = $_POST['password'];
 
-    
-    if (empty($username) || empty($password)) {
-        $error = "Username dan password tidak boleh kosong.";
-    } else {
-      
-        $user = query("SELECT * FROM user WHERE username = ?", [$username]);
+      if (empty($username) || empty($password)) {
+         $error = "Username dan password tidak boleh kosong.";
+      } else {
+         $user = query("SELECT * FROM user WHERE username = ?", [$username]);
 
-        if ($user && password_verify($password, $user[0]['password'])) {
+         if ($user && password_verify($password, $user[0]['password'])) {
             $_SESSION['userId'] = $user[0]['userId'];
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-            $_SESSION['login_attempts'] = 0; 
-            header('Location: '. BASE_URL_HTML .'/system/');
+            $_SESSION['login_attempts'] = 0;
+
+            if ($user[0]['role'] == 0) {
+               header('Location: ' . BASE_URL_HTML . '/user/');
+            } else {
+               header('Location: ' . BASE_URL_HTML . '/system/');
+            }
             exit();
-        } else {
+         } else {
             $_SESSION['login_attempts']++;
             $error = "Username atau password salah.";
-        }
-    }
+         }
+      }
+   }
 }
+
+handleLogin();
 
 
 
