@@ -12,10 +12,9 @@ require_once '../library/config.php';
     <body>
         <div class="container min-vh-100 d-flex flex-column align-items-center justify-content-center bg-white">
                 <div class="text-center mb-4">
-                        <h1 class="display-1 fw-bold text-primary">LetSense</h1>
-                        <p class="fs-4 text-secondary mt-2">Sistem Absensi Pegawai</p>
+                        <h1 class="display-1 fw-bold text-primary">Absensi</h1>
                 </div>
-                <button onclick="getLocation()" class="btn btn-primary btn-lg mt-4">Absen Sekarang</button>
+                <button onclick="getLocation()" class="btn btn-primary btn-lg mt-4 font-weoght-bold">Absen</button>
                 <div id="location" class="mt-4 fs-5 text-secondary">Lokasi Anda akan tampil di sini.</div>
         </div>
         <div id="success-overlay" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white bg-opacity-75 d-none">
