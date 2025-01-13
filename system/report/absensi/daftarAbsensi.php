@@ -56,7 +56,7 @@ $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
 
 ?>
 
-<h4 class="mt-2"><?= $namaProyek ?> - <?= namaBulan(intval($bulan)) ?> <?= $tahun?></h4>
+<h4 class="mt-2"><?= $namaProyek ?> - <?= namaBulan(intval($bulan)) ?> <?= $tahun ?></h4>
 
 <?php
 if ($rentangTanggal) {
@@ -90,19 +90,33 @@ if ($rentangTanggal) {
                             $status = ' - ';
                             $hadirIncrement = 0.0;
                             if (isset($absensiMap[$tanggal][$tukang['idTukang']])) {
-                                $setHariQuery = query(
-                                    "SELECT setHari FROM absensi 
-                                 WHERE idTukang = ? AND DATE(tanggal) = ?",
+                                $timeQuery = query(
+                                    "SELECT waktuMasuk, waktuKeluar FROM absensi 
+                                     WHERE idTukang = ? AND DATE(tanggal) = ?",
                                     [$tukang['idTukang'], $tanggal]
                                 );
-                                $setHari = $setHariQuery[0]['setHari'] ?? 0;
 
-                                if ($setHari == 1) {
-                                    $hadirIncrement = 0.5;
-                                    $status = 'setHari';
+                                if (!empty($timeQuery)) {
+                                    $waktuMasuk = strtotime($timeQuery[0]['waktuMasuk'] ?? '');
+                                    $waktuKeluar = strtotime($timeQuery[0]['waktuKeluar'] ?? '');
+
+                                    if ($waktuMasuk && $waktuKeluar) {
+                                        $durasiKerja = ($waktuKeluar - $waktuMasuk) / 3600; // Hitung selisih dalam jam
+
+                                        if ($durasiKerja < 7) {
+                                            $hadirIncrement = 0.5;
+                                            $status = 'setHari';
+                                        } else {
+                                            $hadirIncrement = 1.0;
+                                            $status = 'Hadir';
+                                        }
+                                    } else {
+                                        $hadirIncrement = 0.0;
+                                        $status = '-';
+                                    }
                                 } else {
-                                    $hadirIncrement = 1.0;
-                                    $status = 'Hadir';
+                                    $hadirIncrement = 0.0;
+                                    $status = '-';
                                 }
                             }
                             $hadirCount += $hadirIncrement;

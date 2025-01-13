@@ -117,6 +117,56 @@ function setHari(data) {
   });
 }
 
+function updateWaktuMasuk(data){
+  const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
+  const waktuMasuk = $("#waktuMasuk").val();
+  $.ajax({
+    url: "../prosesAbsensi.php",
+    type: "post",
+    enctype: "multipart/form-data",
+    data: {
+      flagAbsensi: "waktuMasuk",
+      idAbsensi: idAbsensi,
+      waktuMasuk: waktuMasuk
+
+    },
+    dataType: "json",
+    success: function (data) {
+      const { status, pesan } = data;
+      notifikasi(status, pesan);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error("Error:", textStatus, errorThrown);
+    },
+  });
+
+}
+function updateWaktuKeluar(data){
+  const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
+  const waktuKeluar = $("#waktuKeluar").val();
+  
+  $.ajax({
+    url: "../prosesAbsensi.php",
+    type: "post",
+    enctype: "multipart/form-data",
+    data: {
+      flagAbsensi: "waktuKeluar",
+      idAbsensi: idAbsensi,
+      waktuKeluar: waktuKeluar
+
+    },
+    dataType: "json",
+    success: function (data) {
+      const { status, pesan } = data;
+      notifikasi(status, pesan);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error("Error:", textStatus, errorThrown);
+    },
+  });
+
+}
+
 
 function cariDaftarAbsensi() {
   const searchQuery = $("#searchQuery").val();

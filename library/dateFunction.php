@@ -81,3 +81,8 @@ function dateToMonthName($date){
     $monthNumber = (int)$dateTime->format('m');
     return namaBulan($monthNumber);
 }
+
+
+function timeStampToHourMinute($timestamp) {
+    return date('H:i', strtotime($timestamp));;
+}

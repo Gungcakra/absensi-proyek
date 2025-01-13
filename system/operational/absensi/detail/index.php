@@ -23,7 +23,6 @@ if ($idAbsensi) {
     tukang.jenis,
     absensi.waktuMasuk,
     absensi.waktuKeluar,
-    absensi.setHari,
     IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
 FROM tukang
 LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
@@ -44,7 +43,6 @@ WHERE tukang.idProyek = ?",
             tukang.jenis,
             absensi.waktuMasuk,
             absensi.waktuKeluar,
-            absensi.setHari,
             IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
         FROM tukang
         LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
@@ -107,7 +105,8 @@ WHERE tukang.idProyek = ?",
                                 <th>NO</th>
                                 <th>Tukang</th>
                                 <th>Status</th>
-                                <th>Set Hari</th>
+                                <th>Waktu Masuk</th>
+                                <th>Waktu Keluar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,8 +123,15 @@ WHERE tukang.idProyek = ?",
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <input type="checkbox" name="setHari" id="" setHari" onclick="setHari(<?= htmlspecialchars(json_encode($row)) ?>)" style="width: 20px; height: 20px;" <?= $row['setHari'] === 1 ? 'checked' : '' ?>>
+                                    </td> -->
+
+                                    <td>
+                                        <input type="time" name="waktuMasuk" id="waktuMasuk" value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>" onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
+                                    </td>
+                                    <td>
+                                        <input type="time" name="waktuKeluar" id="waktuKeluar" value="<?= timeStampToHourMinute($row['waktuKeluar'] ) ?? '' ?>" onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
                                     </td>
                                 </tr>
                             <?php } ?>
