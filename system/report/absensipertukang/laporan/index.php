@@ -18,7 +18,7 @@ if (empty($idTukang) || empty($bulanTahunAbsensi)) {
     die('<div class="alert alert-warning mt-2" role="alert">
         <div class="iq-alert-icon">
             <i class="ri-alert-line"></i>
-        </div>
+        </div>  
         <div class="iq-alert-text">Pilih Periode dan Tukang Terlebih Dahulu!</div>
     </div>');
 }
@@ -61,6 +61,7 @@ $options = new Options();
 $options->set('isRemoteEnabled', true);
 $dompdf = new Dompdf($options);
 
+ob_start(); // Start output buffering
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +73,6 @@ $dompdf = new Dompdf($options);
         table {
             border-collapse: collapse;
             width: 100%;
-            page-break-after: always;
         }
 
         table,
@@ -179,3 +179,18 @@ $dompdf = new Dompdf($options);
     <?php endif; ?>
 </body>
 </html>
+<?php
+$html = ob_get_clean(); // Get the buffered content
+
+// Load HTML into Dompdf
+$dompdf->loadHtml($html);
+
+// Set paper size (optional)
+$dompdf->setPaper('A4', 'portrait');
+
+// Render PDF (first pass: convert HTML to PDF)
+$dompdf->render();
+
+// Output the generated PDF to browser
+$dompdf->stream('absensi_' . $namaTukang . '_' . $tahun . '_' . $bulan . '.pdf', array('Attachment' => 1)); // 1 means download
+?>
