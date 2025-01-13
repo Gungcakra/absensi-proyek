@@ -51,7 +51,6 @@ if (empty($tukangQuery)) {
 $tukang = $tukangQuery[0];
 
 $namaTukang = query("SELECT nama FROM tukang WHERE idTukang = ?", [$idTukang])[0]['nama'];
-
 ?>
 
 <h4 class="mt-2">Absensi <?= $namaTukang ?> - <?= namaBulan(intval($bulan)) ?> <?= $tahun ?></h4>
@@ -100,10 +99,10 @@ if ($rentangTanggal) {
                                     $durasiKerja = ($waktuKeluar - $waktuMasuk) / 3600; 
                                     if ($durasiKerja < 7) {
                                         $hadirIncrement = 0.5;
-                                        $status = 'Setengah Hari';
+                                        $status = '0.5';
                                     } else {
                                         $hadirIncrement = 1.0;
-                                        $status = 'Hadir';
+                                        $status = '1';
                                     }
                                 } else {
                                     $hadirIncrement = 0.0;

@@ -116,7 +116,7 @@ checkUserSession($db);
                                         </div>
                                     </div>
                                 </div>
-                                <div id="daftarAbsensi" class="w-100">
+                                <div id="daftarAbsensi" class="w-100" style="overflow:scroll">
 
                                 </div>
                                 <!-- <div class="row justify-content-between mt-3" id="pagination">

@@ -63,7 +63,7 @@ if ($idCashbon) {
                                 <div class="col-md-6 d-flex flex-column">
                                     <input type="hidden" name="flagCashbon" id="flagCashbon" value="<?= $flagCashbon ?>">
                                     <input type="hidden" name="idCashbon" id="idCashbon" value="<?= $idCashbon ?>">
-                                    <label for="idProyek">Tukang</label>
+                                    <label for="idTukang">Tukang</label>
                                     <select class="form-control select-tukang" id="idTukang" name="idTukang">
                                         <option value="">Pilih Tukang</option>
                                         <?php
@@ -71,7 +71,7 @@ if ($idCashbon) {
                                         foreach ($tukangList as $tukang) {
                                             $selected = ($data['idTukang'] ?? '') == $tukang['idTukang'] ? 'selected' : '';
                                         ?>
-                                            <option value="<?= $tukang['idProyek'] ?>" <?= $selected ?>><?= $tukang['nama'] ?></option>
+                                            <option value="<?= $tukang['idTukang'] ?>" <?= $selected ?>><?= $tukang['nama'] ?></option>
                                         <?php
                                         }
                                         ?>

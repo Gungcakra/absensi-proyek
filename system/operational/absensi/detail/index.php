@@ -128,7 +128,7 @@ WHERE tukang.idProyek = ?",
                                     </td> -->
 
                                     <td>
-                                        <input type="time" name="waktuMasuk" id="waktuMasuk" value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>" onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
+                                        <input type="time" name="   uk" id="waktuMasuk" value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>" onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
                                     </td>
                                     <td>
                                         <input type="time" name="waktuKeluar" id="waktuKeluar" value="<?= timeStampToHourMinute($row['waktuKeluar'] ) ?? '' ?>" onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">

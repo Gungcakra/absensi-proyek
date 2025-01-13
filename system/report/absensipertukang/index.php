@@ -97,7 +97,7 @@ checkUserSession($db);
                                                         foreach ($tukangList as $tukang) {
                                                             $selected = ($data['idTukang'] ?? '') == $tukang['idTukang'] ? 'selected' : '';
                                                         ?>
-                                                            <option value="<?= $tukang['idProyek'] ?>" <?= $selected ?>><?= $tukang['nama'] ?></option>
+                                                            <option value="<?= $tukang['idTukang'] ?>" <?= $selected ?>><?= $tukang['nama'] ?></option>
                                                         <?php
                                                         }
                                                         ?>
