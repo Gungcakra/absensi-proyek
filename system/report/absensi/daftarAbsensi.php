@@ -101,7 +101,7 @@ if ($rentangTanggal) {
                                     $waktuKeluar = strtotime($timeQuery[0]['waktuKeluar'] ?? '');
 
                                     if ($waktuMasuk && $waktuKeluar) {
-                                        $durasiKerja = ($waktuKeluar - $waktuMasuk) / 3600; // Hitung selisih dalam jam
+                                        $durasiKerja = ($waktuKeluar - $waktuMasuk) / 3600; 
                                         if ($durasiKerja < 7) {
                                             $hadirIncrement = 0.5;
                                             $status = 'setHari';
