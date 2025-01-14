@@ -5,6 +5,9 @@ function rupiah($angka) {
     return "Rp " . number_format($angka, 0, ',', '.');
 }
 function rupiahTanpaRp($angka) {
+    if ($angka == 0) {
+        return ' ';
+    }
     return number_format($angka, 0, ',', '.');
 }
 
