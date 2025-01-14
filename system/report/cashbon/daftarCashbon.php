@@ -6,7 +6,6 @@ require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 
 checkUserSession($db);
 
-// Ambil idProyek dan bulanTahunAbsensi dari POST
 $idProyek = $_POST['idProyek'] ?? '';
 $bulanTahunAbsensi = $_POST['bulanTahun'] ?? '';
 
@@ -19,7 +18,6 @@ if (empty($idProyek) || empty($bulanTahunAbsensi)) {
     </div>');
 }
 
-// Pisahkan bulan dan tahun dari $bulanTahunAbsensi
 list($tahun, $bulan) = explode('-', $bulanTahunAbsensi);
 
 // Ambil data proyek
@@ -29,7 +27,6 @@ if (empty($namaProyekQuery)) {
 }
 $namaProyek = $namaProyekQuery[0]['namaProyek'];
 
-// Rentang tanggal berdasarkan bulan dan tahun
 $jumlahHariBulan = (int)date('t', strtotime("$tahun-$bulan-01"));
 $rentangTanggal = [
     range(1, 10),
@@ -37,7 +34,6 @@ $rentangTanggal = [
     range(21, $jumlahHariBulan)
 ];
 
-// Ambil data tukang berdasarkan proyek
 $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
 
 ?>
