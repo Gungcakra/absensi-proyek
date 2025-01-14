@@ -10,11 +10,11 @@ function getLastAbsensi()
     return $result[0]['idAbsensi'];
 }
 
-function addAbsensi($idProyek, $idTukang)
+function addAbsensi($idProyek, $idTukang, $tanggalAbsensi)
 {
-    $tanggal = date('Y-m-d H:i:s');
+    
     $query = "INSERT INTO absensi (idProyek, idTukang, tanggal) VALUES (?, ?, ?)";
-    return query($query, [$idProyek, $idTukang, $tanggal]);
+    return query($query, [$idProyek, $idTukang, $tanggalAbsensi]);
 }
 
 function deleteAbsensi($idAbsensi)
@@ -45,6 +45,7 @@ if (isset($_POST['flagAbsensi'])) {
         $idTukang = sanitizeInput($_POST['idTukang']);
         $idProyek = sanitizeInput($_POST['idProyek']);
         $idAbsensi = sanitizeInput($_POST['idAbsensi']);
+        $tanggalAbsensi = sanitizeInput($_POST['tanggalAbsensi']);
 
         if (!empty($idAbsensi)) {
             $result = deleteAbsensi($idAbsensi);
@@ -54,7 +55,7 @@ if (isset($_POST['flagAbsensi'])) {
                 $response = ["status" => false, "pesan" => "Failed to delete Absensi: " . mysqli_error($db)];
             }
         } else {
-            $result = addAbsensi($idProyek, $idTukang);
+            $result = addAbsensi($idProyek, $idTukang, $tanggalAbsensi);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Absensi added successfully!"];
             } else {

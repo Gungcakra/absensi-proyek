@@ -64,15 +64,17 @@ if ($rentangTanggal) {
         <table border="1" cellspacing="0" cellpadding="5" style="margin-top: 20px; width: 100%;">
             <thead>
                 <tr>
+                    <th rowspan="2" style="text-align: center;">No</th>
                     <th rowspan="2" style="text-align: center;">Nama</th>
                     <th colspan="<?= count($range) ?>" style="text-align: center;">Tanggal <?= namaBulan($bulan) ?></th>
                     <th rowspan="2" style="text-align: center;">Jml</th>
-                    <th rowspan="2" style="text-align: center;">Gaji Harian</th>
+                    <th rowspan="2" style="text-align: center;">GjH(Rp)</th>
                     <th rowspan="2" style="text-align: center;">Total</th>
                     <th rowspan="2" style="text-align: center;">Bon(Rp)</th>
                     <th rowspan="2" style="text-align: center;">Sisa(Rp)</th>
-                    <th rowspan="2" style="text-align: center;">Keterangan</th>
-                    <th rowspan="2" style="text-align: center;">TTD</th>
+                    <th rowspan="2" style="text-align: center;">DTR(Rp)</th>
+                    <th rowspan="2" style="text-align: center; width: 120px;">Tanda Tangan</th>
+                    <th rowspan="2" style="text-align: center; width: 170px;">Keterangan</th>
                 </tr>
                 <tr>
                     <?php foreach ($range as $day) { ?>
@@ -81,8 +83,13 @@ if ($rentangTanggal) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($tukangList as $tukang) { ?>
+                <?php 
+                $grandTotalGaji = 0;
+                $grandTotalBon = 0;
+                $grandTotalSisa = 0;
+                foreach ($tukangList as $key => $tukang) { ?>
                     <tr>
+                        <td><?= $key+1 ?></td>
                         <td><?= $tukang['nama'] ?></td>
                         <?php
                         $totalBon = 0;
@@ -134,16 +141,29 @@ if ($rentangTanggal) {
                         $gajiHarian = $tukang['gaji'] ?? 0;
                         $totalGaji = $gajiHarian * $hadirCount;
                         $sisa = $totalGaji - $totalBon;
+
+                        $grandTotalGaji += $totalGaji;
+                        $grandTotalBon += $totalBon;
+                        $grandTotalSisa += $sisa;
                         ?>
                         <td style="text-align:center;"><?= $hadirCount ?></td>
-                        <td style="text-align:center;"><?= rupiah($gajiHarian) ?></td>
-                        <td style="text-align:center;"><?= rupiah($totalGaji) ?></td>
+                        <td style="text-align:center;"><?= rupiahTanpaRp($gajiHarian) ?></td>
+                        <td style="text-align:center;"><?= rupiahTanpaRp($totalGaji) ?></td>
                         <td style="text-align:center;"><?= rupiahTanpaRp($totalBon) ?></td>
                         <td style="text-align:center;"><?= rupiahTanpaRp($sisa) ?></td>
                         <td style="text-align:center;"></td>
                         <td style="text-align:center;"></td>
+                        <td style="text-align:center;"></td>
                     </tr>
                 <?php } ?>
+                <tr>
+                    <td style="text-align:center; font-weight:bold;" colspan="<?= count($range) + 4 ?>">Total</td>
+                    <td style="text-align:center; font-weight:bold;"><?= rupiahTanpaRp($grandTotalGaji) ?></td>
+                    <td style="text-align:center; font-weight:bold;"><?= rupiahTanpaRp($grandTotalBon) ?></td>
+                    <td style="text-align:center; font-weight:bold;"><?= rupiahTanpaRp($grandTotalSisa) ?></td>
+                    <td style="text-align:center; font-weight:bold;"></td>
+                    <td style="text-align:center; font-weight:bold;"></td>
+                </tr>
             </tbody>
         </table>
     <?php }

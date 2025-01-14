@@ -61,22 +61,31 @@ ob_start();
 <head>
     <title>Absensi Proyek</title>
     <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
         table {
             border-collapse: collapse;
             width: 100%;
             page-break-after: always;
+            height: auto;
         }
 
         table,
         th,
         td {
             border: 1px solid black;
+            height: 20px
         }
 
         th,
         td {
             padding: 5px;
             text-align: center;
+            height: 20px
         }
     </style>
 </head>
@@ -88,15 +97,17 @@ ob_start();
         <table>
             <thead>
                 <tr>
+                    <th rowspan="2">No</th>
                     <th rowspan="2">Nama</th>
                     <th colspan="<?= count($range) ?>">Tanggal <?= namaBulan($bulan) ?></th>
                     <th rowspan="2">Jml</th>
-                    <th rowspan="2">Gaji Harian</th>
-                    <th rowspan="2">Total</th>
+                    <th rowspan="2">GjH(Rp)</th>
+                    <th rowspan="2">Total(Rp)</th>
                     <th rowspan="2">Bon(Rp)</th>
                     <th rowspan="2">Sisa(Rp)</th>
-                    <th rowspan="2">Keterangan</th>
-                    <th rowspan="2">TTD</th>
+                    <th rowspan="2">DTR(Rp)</th>
+                    <th rowspan="2" style="text-align: center; width: 120px;">Tanda Tangan</th>
+                    <th rowspan="2" style="text-align: center; width: 170px;">Keterangan</th>
                 </tr>
                 <tr>
                     <?php foreach ($range as $day) { ?>
@@ -105,8 +116,13 @@ ob_start();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($tukangList as $tukang) { ?>
+                <?php 
+                $grandTotalGaji = 0;
+                $grandTotalBon = 0;
+                $grandTotalSisa = 0;
+                foreach ($tukangList as $key => $tukang) { ?>
                     <tr>
+                        <td><?= $key+1 ?></td>
                         <td><?= $tukang['nama'] ?></td>
                         <?php
                         $hadirCount = 0.0;
@@ -157,16 +173,30 @@ ob_start();
                         $gajiHarian = $tukang['gaji'] ?? 0;
                         $totalGaji = $gajiHarian * $hadirCount;
                         $sisa = $totalGaji - $totalBon;
+
+                        $grandTotalGaji += $totalGaji;
+                        $grandTotalBon += $totalBon;
+                        $grandTotalSisa += $sisa;
                         ?>
                         <td><?= $hadirCount ?></td>
-                        <td><?= rupiah($gajiHarian) ?></td>
-                        <td><?= rupiah($totalGaji) ?></td>
+                        <td><?= rupiahTanpaRp($gajiHarian) ?></td>
+                        <td><?= rupiahTanpaRp($totalGaji) ?></td>
                         <td><?= rupiahTanpaRp($totalBon) ?></td>
                         <td><?= rupiahTanpaRp($sisa) ?></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                     </tr>
                 <?php } ?>
+                <tr>
+                    <td style="font-weight:bold;" colspan="<?= count($range) + 4 ?>">Total</td>
+                    <td style="font-weight:bold;"><?= rupiahTanpaRp($grandTotalGaji) ?></td>
+                    <td style="font-weight:bold;"><?= rupiahTanpaRp($grandTotalBon) ?></td>
+                    <td style="font-weight:bold;"><?= rupiahTanpaRp($grandTotalSisa) ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
         <br>
@@ -180,7 +210,7 @@ $html = ob_get_clean();
 // Generate PDF
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
-$dompdf->setPaper('A4', 'landscape');
+$dompdf->setPaper('Legal', 'landscape');
 $dompdf->render();
 
 // Kirim PDF ke browser untuk diunduh

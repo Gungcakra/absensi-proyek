@@ -46,9 +46,10 @@ foreach ($rentangTanggal as $range) {
     $html .= "<table border='1' cellspacing='0' cellpadding='5' style='margin-top: 20px; width: 100%;'>";
     $html .= "<thead>
                 <tr>
+                    <th rowspan='2' style='text-align: center;'>No</th>
                     <th rowspan='2' style='text-align: center;'>Nama</th>
                     <th colspan='" . count($range) . "' style='text-align: center;'>Tanggal " . namaBulan($bulan) . "</th>
-                    <th rowspan='2' style='text-align: center;'>Total</th>
+                    <th rowspan='2' style='text-align: center;'>Total(Rp)</th>
                 </tr>
                 <tr>";
     foreach ($range as $day) {
@@ -57,30 +58,30 @@ foreach ($rentangTanggal as $range) {
     $html .= "</tr>
             </thead>
             <tbody>";
+            foreach ($tukangList as $index => $tukang) {
+                $html .= "<tr>
+                            <td style='text-align:center;'>" . ($index + 1) . "</td>
+                            <td>{$tukang['nama']}</td>";
+                $totalBon = 0;
+                foreach ($range as $day) {
+                    $tanggal = "$tahun-$bulan-" . str_pad($day, 2, '0', STR_PAD_LEFT);
+                    $bonQuery = query(
+                        "SELECT SUM(nominal) AS totalBon 
+                         FROM cashbon 
+                         WHERE idTukang = ? AND DATE(tanggal) = ?",
+                        [$tukang['idTukang'], $tanggal]
+                    );
+                    $nominalBon = $bonQuery[0]['totalBon'] ?? 0;
+                    $totalBon += $nominalBon;
+                    $html .= "<td style='text-align:center;'>" . rupiahTanpaRp($nominalBon) . "</td>";
+                }
+                $html .= "<td style='text-align:center;'>" . rupiahTanpaRp($totalBon) . "</td>
+                        </tr>";
+            }
 
-    foreach ($tukangList as $tukang) {
-        $html .= "<tr>
-                    <td>{$tukang['nama']}</td>";
-        $totalBon = 0;
-        foreach ($range as $day) {
-            $tanggal = "$tahun-$bulan-" . str_pad($day, 2, '0', STR_PAD_LEFT);
-            $bonQuery = query(
-                "SELECT SUM(nominal) AS totalBon 
-                 FROM cashbon 
-                 WHERE idTukang = ? AND DATE(tanggal) = ?",
-                [$tukang['idTukang'], $tanggal]
-            );
-            $nominalBon = $bonQuery[0]['totalBon'] ?? 0;
-            $totalBon += $nominalBon;
-            $html .= "<td style='text-align:center;'>" . rupiahTanpaRp($nominalBon) . "</td>";
-        }
-        $html .= "<td style='text-align:center;'>" . rupiah($totalBon) . "</td>
-                </tr>";
-    }
-
-    $html .= "</tbody>
-        </table>";
-}
+                        $html .= "</tbody>
+                            </table>";
+            }
 
 $options = new Options();
 $options->set('isHtml5ParserEnabled', true);
@@ -98,3 +99,4 @@ header('Content-Type: application/pdf');
 header('Content-Disposition: attachment; filename="' . $filename . '"');
 $dompdf->stream($filename, ["Attachment" => true]);
 exit;
+?>

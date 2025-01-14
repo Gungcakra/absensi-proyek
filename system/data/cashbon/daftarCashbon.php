@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "../../../library/config.php";
+require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 
 //CEK USER
@@ -39,7 +40,7 @@ $query = "SELECT
                 tukang.nama AS namaTukang
           FROM cashbon 
           INNER JOIN tukang ON cashbon.idTukang = tukang.idTukang"
-          . $conditions . " ORDER BY tukang.nama ASC LIMIT ? OFFSET ?";
+          . $conditions . " ORDER BY tukang.nama, cashbon.tanggal ASC LIMIT ? OFFSET ?";
 
 
 $params[] = $limit;
@@ -87,7 +88,7 @@ $cashbon = query($query, $params);
                 <td><?= $row['namaTukang'] ?></td>
                 <td><?= rupiah($row['nominal']) ?></td>
                 <td><?= $row['keterangan'] ?></td>
-                <td><?= $row['tanggal'] ?></td>
+                <td><?= timeStampToTanggalNamaBulan($row['tanggal']) ?></td>
         </tr>
         
     <?php endforeach; ?>

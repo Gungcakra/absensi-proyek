@@ -15,21 +15,22 @@ if ($idAbsensi) {
     $idProyek = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['idProyek'];
     $dataDetailAbsensi = query(
         "SELECT 
-    proyek.*,
-    absensi.idAbsensi,
-    tukang.idTukang,
-    tukang.nama AS namaTukang,
-    tukang.bidang,
-    tukang.jenis,
-    absensi.waktuMasuk,
-    absensi.waktuKeluar,
-    IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
-FROM tukang
-LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
-LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
-    AND absensi.idProyek = tukang.idProyek 
-    AND absensi.tanggal = ?
-WHERE tukang.idProyek = ?",
+            proyek.*,
+            absensi.idAbsensi,
+            tukang.idTukang,
+            tukang.nama AS namaTukang,
+            tukang.bidang,
+            tukang.jenis,
+            absensi.waktuMasuk,
+            absensi.waktuKeluar,
+            IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
+        FROM tukang
+        LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
+        LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
+            AND absensi.idProyek = tukang.idProyek 
+            AND absensi.tanggal = ?
+        WHERE tukang.idProyek = ?
+        ORDER BY tukang.nama ASC",
         [$tanggalAbsensi, $idProyek]
     );
 } else {
@@ -49,7 +50,8 @@ WHERE tukang.idProyek = ?",
         LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
             AND absensi.idProyek = tukang.idProyek 
             AND absensi.tanggal >= CURDATE()
-        WHERE tukang.idProyek = ?",
+        WHERE tukang.idProyek = ?
+        ORDER BY tukang.nama ASC",
         [$idProyek]
     );
 }
@@ -95,8 +97,13 @@ WHERE tukang.idProyek = ?",
         <?php require_once "{$constant('BASE_URL_PHP')}/system/navbar.php" ?>
 
         <div class="content-page">
+            <input type="hidden" value="<?= $tanggalAbsensi ?>" id="tanggalAbsen" name="tanggalAbsen">
             <div class="container-fluid bg-white p-4 rouned-md">
-                <p class="font-size-20 font-weight-bold">Absensi Proyek </p>
+                <?php if (!empty($tanggalAbsensi)) { ?>
+                    <p class="font-size-20 font-weight-bold">Absensi Proyek <?= tanggalTerbilang($tanggalAbsensi) ?? '' ?></p>
+                <?php }else{ ?>
+                    <p class="font-size-20 font-weight-bold">Absensi Proyek</p>
+                    <?php }?>
                 <div class="row">
                     <table class="table table-striped dataTable mt-4" role="grid"
                         aria-describedby="tukang-list-page-info">
@@ -139,7 +146,7 @@ WHERE tukang.idProyek = ?",
                                     </td>
 
                                 </tr>
-                            <?php } ?>
+                       <?php } ?>
                         </tbody>
                     </table>
                 </div>

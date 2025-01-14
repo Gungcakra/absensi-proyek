@@ -11,9 +11,9 @@ function getLastCashbon() {
     return $result[0]['idCashbon'];
 }
 
-function addCashbon($idTukang, $keterangan, $nominal) {
-    $query = "INSERT INTO cashbon (idTukang, keterangan, nominal) VALUES (?, ?, ?)";
-    return query($query, [$idTukang, $keterangan, $nominal]);
+function addCashbon($idTukang, $keterangan, $nominal, $tanggal) {
+    $query = "INSERT INTO cashbon (idTukang, keterangan, nominal, tanggal) VALUES (?, ?, ?, ?)";
+    return query($query, [$idTukang, $keterangan, $nominal, $tanggal]);
 }
 
 function deleteCashbon($idCashbon) {
@@ -21,9 +21,9 @@ function deleteCashbon($idCashbon) {
     return query($query, [$idCashbon]);
 }
 
-function updateCashbon($idCashbon, $idTukang, $keterangan, $nominal) {
-    $query = "UPDATE cashbon SET idTukang = ?, keterangan = ?, nominal = ? WHERE idCashbon = ?";
-    return query($query, [$idTukang, $keterangan, $nominal, $idCashbon]);
+function updateCashbon($idCashbon, $idTukang, $keterangan, $nominal, $tanggal) {
+    $query = "UPDATE cashbon SET idTukang = ?, keterangan = ?, nominal = ?, tanggal = ? WHERE idCashbon = ?";
+    return query($query, [$idTukang, $keterangan, $nominal, $tanggal, $idCashbon]);
 }
 
 if (isset($_POST['flagCashbon'])) {
@@ -35,7 +35,8 @@ if (isset($_POST['flagCashbon'])) {
             $idTukang = sanitizeInput($_POST['idTukang']);
             $keterangan = sanitizeInput($_POST['keterangan']);
             $nominal = sanitizeInput($_POST['nominal']);
-            $result = addCashbon($idTukang, $keterangan, $nominal);
+            $tanggal = date('Y-m-d H:i:s', strtotime(sanitizeInput($_POST['tanggal'])));
+            $result = addCashbon($idTukang, $keterangan, $nominal, $tanggal);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Cashbon added successfully!"];
             } else {
@@ -58,7 +59,9 @@ if (isset($_POST['flagCashbon'])) {
             $idTukang = sanitizeInput($_POST['idTukang']);
             $keterangan = sanitizeInput($_POST['keterangan']);
             $nominal = sanitizeInput($_POST['nominal']);
-            $result = updateCashbon($idCashbon, $idTukang, $keterangan, $nominal);
+            $tanggal = sanitizeInput($_POST['tanggal']);
+            $tanggal = date('Y-m-d H:i:s', strtotime(sanitizeInput($_POST['tanggal'])));
+            $result = updateCashbon($idCashbon, $idTukang, $keterangan, $nominal, $tanggal);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Cashbon updated successfully!"];
             } else {

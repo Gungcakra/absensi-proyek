@@ -46,9 +46,10 @@ if ($rentangTanggal) {
         <table border="1" cellspacing="0" cellpadding="5" style="margin-top: 20px; width: 100%;">
             <thead>
                 <tr>
+                    <th rowspan="2" style="text-align: center;">NO</th>
                     <th rowspan="2" style="text-align: center;">Nama</th>
                     <th colspan="<?= count($range) ?>" style="text-align: center;">Tanggal <?= namaBulan($bulan) ?></th>
-                    <th rowspan="2" style="text-align: center;">Total</th>
+                    <th rowspan="2" style="text-align: center;">Total(Rp)</th>
                 </tr>
                 <tr>
                     <?php foreach ($range as $day) { ?>
@@ -57,8 +58,11 @@ if ($rentangTanggal) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($tukangList as $tukang) { ?>
+                <?php 
+                $grandTotalBon = 0;
+                foreach ($tukangList as $key => $tukang) { ?>
                     <tr>
+                        <td><?= $key + 1 ?></td>
                         <td><?= $tukang['nama'] ?></td>
                         <?php
                         $totalBon = 0;
@@ -74,10 +78,15 @@ if ($rentangTanggal) {
                             $totalBon += $nominalBon;
                             echo "<td style=\"text-align:center;\">" . rupiahTanpaRp($nominalBon) . "</td>";
                         }
+                        $grandTotalBon += $totalBon;
                         ?>
-                        <td style="text-align:center;"><?= rupiah($totalBon) ?></td>
+                        <td style="text-align:center;"><?= rupiahTanpaRp($totalBon) ?></td>
                     </tr>
                 <?php } ?>
+                <tr>
+                    <td colspan="<?= count($range) + 2 ?>" style="text-align:center;"><strong>Total Keseluruhan</strong></td>
+                    <td style="text-align:center;"><strong><?= rupiahTanpaRp($grandTotalBon) ?></strong></td>
+                </tr>
             </tbody>
         </table>
     <?php }

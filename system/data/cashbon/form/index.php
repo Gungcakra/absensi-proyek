@@ -34,7 +34,7 @@ if ($idCashbon) {
 
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    
+
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
@@ -83,10 +83,14 @@ if ($idCashbon) {
                                 </div>
                                 <div class="col-md-6 d-flex flex-column">
                                     <label for="keterangan">Keterangan</label>
-                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?= $data['keterangan'] ?? '' ?>" autocomplete="off" placeholder="Keterangan">
+                                    <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?= $data['keterangan'] ?? '' ?>" autocomplete="off" placeholder="keterangan">
                                 </div>
-                          
-                               
+                                <div class="col-md-6 d-flex flex-column">
+                                    <label for="tanggal">Tanggal</label>
+                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?= isset($data['tanggal']) ? date('Y-m-d', strtotime($data['tanggal'])) : '' ?>" autocomplete="off" placeholder="tanggal">
+                                </div>
+
+
                             </div>
                         </form>
 

@@ -67,6 +67,7 @@ function prosesAbsensi(data) {
   const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
   const idTukang = data.idTukang;
   const idProyek = data.idProyek;
+  const tanggalAbsensi = $("#tanggalAbsen").val()
   $.ajax({
     url: "../prosesAbsensi.php",
     type: "post",
@@ -76,6 +77,7 @@ function prosesAbsensi(data) {
       idAbsensi: idAbsensi,
       idTukang: idTukang,
       idProyek: idProyek,
+      tanggalAbsensi: tanggalAbsensi,
     },
     dataType: "json",
     success: function (data) {
