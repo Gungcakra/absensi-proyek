@@ -2,6 +2,13 @@
 require_once "./library/config.php";
 session_start();
 
+// Cek apakah user sudah login
+if (isset($_SESSION['userId'])) {
+    // Jika sudah login, arahkan langsung ke halaman yang diinginkan
+    header("Location: " . BASE_URL_HTML . "/system/");
+    exit();
+}
+
 // Batasi percobaan login
 function handleLogin() {
    if (!isset($_SESSION['login_attempts'])) {
@@ -26,11 +33,8 @@ function handleLogin() {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             $_SESSION['login_attempts'] = 0;
 
-            echo "<script>
-               localStorage.setItem('userId', '{$user[0]['userId']}');
-               localStorage.setItem('csrf_token', '{$_SESSION['csrf_token']}');
-               window.location.href = '" . BASE_URL_HTML . "/system/';
-            </script>";
+            // Redirect langsung ke halaman yang diinginkan
+            header("Location: " . BASE_URL_HTML . "/system/");
             exit();
          } else {
             $_SESSION['login_attempts']++;
@@ -39,13 +43,6 @@ function handleLogin() {
       }
    }
 }
-
-// Check if user is already logged in via localStorage
-echo "<script>
-   if (localStorage.getItem('userId')) {
-      window.location.href = '" . BASE_URL_HTML . "/system/';
-   }
-</script>";
 
 handleLogin();
 ?>
@@ -65,25 +62,24 @@ handleLogin();
       
       <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-calendar/dist/tui-calendar.css">
       <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-date-picker/dist/tui-date-picker.css">
-      <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css">
+      <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css"> 
       <link rel="manifest" href="<?= BASE_URL_HTML?>/manifest.json">
-
    </head>
-  <body class=" "></body>
+  <body class=" ">
     <!-- loader Start -->
-    <!-- <div id="loading"></div>
+    <div id="loading">
           <div id="loading-center">
           </div>
-    </div> -->
+    </div>
     <!-- loader END -->
     
-      <div class="wrapper"></div>
-      <section class="login-content"></section>
-         <div class="container"></div>
+      <div class="wrapper">
+      <section class="login-content">
+         <div class="container">
             <div class="row align-items-center justify-content-center height-self-center">
-               <div class="col-lg-8"></div>
-                  <h2 class="text-center text-primary">Absensi Proyek </h2>
-                  <div class="card auth-card"></div>
+               <div class="col-lg-8">
+                  <h2 class="text-center text-primary">Absensi</h2>
+                  <div class="card auth-card">
                      <div class="card-body p-0">
                         <div class="d-flex align-items-center auth-content">
                            <div class="col-lg-6 bg-primary content-left">
