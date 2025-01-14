@@ -1,5 +1,3 @@
-
-
 <?php
 require_once "./library/config.php";
 session_start();
@@ -28,11 +26,11 @@ function handleLogin() {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             $_SESSION['login_attempts'] = 0;
 
-            if ($user[0]['role'] == 0) {
-               header('Location: ' . BASE_URL_HTML . '/user/');
-            } else {
-               header('Location: ' . BASE_URL_HTML . '/system/');
-            }
+            echo "<script>
+               localStorage.setItem('userId', '{$user[0]['userId']}');
+               localStorage.setItem('csrf_token', '{$_SESSION['csrf_token']}');
+               window.location.href = '" . BASE_URL_HTML . "/system/';
+            </script>";
             exit();
          } else {
             $_SESSION['login_attempts']++;
@@ -42,10 +40,14 @@ function handleLogin() {
    }
 }
 
+// Check if user is already logged in via localStorage
+echo "<script>
+   if (localStorage.getItem('userId')) {
+      window.location.href = '" . BASE_URL_HTML . "/system/';
+   }
+</script>";
+
 handleLogin();
-
-
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -64,21 +66,21 @@ handleLogin();
       <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-calendar/dist/tui-calendar.css">
       <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-date-picker/dist/tui-date-picker.css">
       <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css">  </head>
-  <body class=" ">
+  <body class=" "></body>
     <!-- loader Start -->
-    <div id="loading">
+    <div id="loading"></div>
           <div id="loading-center">
           </div>
     </div>
     <!-- loader END -->
     
-      <div class="wrapper">
-      <section class="login-content">
-         <div class="container">
+      <div class="wrapper"></div>
+      <section class="login-content"></section>
+         <div class="container"></div>
             <div class="row align-items-center justify-content-center height-self-center">
-               <div class="col-lg-8">
+               <div class="col-lg-8"></div>
                   <h2 class="text-center text-primary">Absensi Proyek </h2>
-                  <div class="card auth-card">
+                  <div class="card auth-card"></div>
                      <div class="card-body p-0">
                         <div class="d-flex align-items-center auth-content">
                            <div class="col-lg-6 bg-primary content-left">
