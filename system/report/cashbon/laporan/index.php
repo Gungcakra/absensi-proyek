@@ -25,7 +25,6 @@ if (empty($idProyek) || empty($bulanTahunAbsensi)) {
 
 [$tahun, $bulan] = explode('-', $bulanTahunAbsensi);
 
-// Ambil data proyek
 $namaProyekQuery = query("SELECT namaProyek FROM proyek WHERE idProyek = ?", [$idProyek]);
 if (empty($namaProyekQuery)) {
     die("Error: Proyek dengan idProyek = {$idProyek} tidak ditemukan.");
@@ -41,7 +40,6 @@ $rentangTanggal = [
 
 $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
 
-// Generate HTML content
 $html = "<h4 style='text-align:center;'>{$namaProyek} - " . namaBulan(intval($bulan)) . " {$tahun}</h4>";
 
 foreach ($rentangTanggal as $range) {
@@ -84,7 +82,6 @@ foreach ($rentangTanggal as $range) {
         </table>";
 }
 
-// Konfigurasi Dompdf
 $options = new Options();
 $options->set('isHtml5ParserEnabled', true);
 $options->set('isRemoteEnabled', true);
@@ -92,13 +89,10 @@ $dompdf = new Dompdf($options);
 
 $dompdf->loadHtml($html);
 
-// Set ukuran dan orientasi kertas
 $dompdf->setPaper('A4', 'portrait');
 
-// Render PDF
 $dompdf->render();
 
-// Output ke browser
 $filename = "Rekap Cashbon - " . namaBulan(intval($bulan)) . " {$tahun} - {$namaProyek}.pdf";
 header('Content-Type: application/pdf');
 header('Content-Disposition: attachment; filename="' . $filename . '"');

@@ -83,7 +83,7 @@
             'active' => false,
             'submenu' => [
                 [
-                    'title' => 'Absensi',
+                    'title' => 'Gajian',
                     'icon' => '<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m4 8h6m-6-4h6m4-8v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
 </svg>
@@ -93,7 +93,7 @@
                     'active' => $_SERVER['REQUEST_URI'] == BASE_URL_HTML . '/system/report/absensi/'
                 ],
                 [
-                    'title' => 'Pertukang',
+                    'title' => 'Absensi',
                     'icon' => '<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-3 5h3m-6 0h.01M12 16h3m-6 0h.01M10 3v4h4V3h-4Z"/>
 </svg>
@@ -101,15 +101,15 @@
 </svg>
 
 ',
-                    'url' => BASE_URL_HTML . '/system/report/absensipertukang/',
-                    'active' => $_SERVER['REQUEST_URI'] == BASE_URL_HTML . '/system/report/absensipertukang/'
+                    'url' => BASE_URL_HTML . '/system/report/absentukang/',
+                    'active' => $_SERVER['REQUEST_URI'] == BASE_URL_HTML . '/system/report/absentukang/'
                 ],
                 [
                     'title' => 'Cash Bon',
                     'icon' => '<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
 </svg>
-                    
+
 
 ',
                     'url' => BASE_URL_HTML . '/system/report/cashbon/',
