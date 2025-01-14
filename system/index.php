@@ -42,7 +42,7 @@ checkUserSession($db);
 
       <div class="content-page">
      <div class="container-fluid">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6 col-lg-3">
                 <div class="card card-block card-stretch card-height">
                     <div class="card-body">
@@ -116,7 +116,7 @@ checkUserSession($db);
                 </div>
             </div>
 
-        </div>
+        </div> -->
         <!-- Page end  -->
     </div>
       </div>
