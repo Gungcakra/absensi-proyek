@@ -6,6 +6,7 @@ require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 checkUserSession($db);
 $idProyek = $_GET['data'] ?? '';
 $idAbsensi = $_GET['absen'] ?? '';
+$tanggalHariIni = date('Y-m-d');
 if ($idProyek) {
     $idProyek = decryptUrl($idProyek);
 }
@@ -49,10 +50,10 @@ if ($idAbsensi) {
         LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
         LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
             AND absensi.idProyek = tukang.idProyek 
-            AND absensi.tanggal >= CURDATE()
+            AND absensi.tanggal >= ?
         WHERE tukang.idProyek = ?
         ORDER BY tukang.nama ASC",
-        [$idProyek]
+        [$tanggalHariIni, $idProyek]
     );
 }
 

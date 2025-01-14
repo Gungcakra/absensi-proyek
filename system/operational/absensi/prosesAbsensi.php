@@ -45,8 +45,8 @@ if (isset($_POST['flagAbsensi'])) {
         $idTukang = sanitizeInput(data: $_POST['idTukang']);
         $idProyek = sanitizeInput($_POST['idProyek']);
         $idAbsensi = sanitizeInput($_POST['idAbsensi']);
-        $tanggalAbsensi = sanitizeInput($_POST['tanggalAbsensi']);
-
+        $tanggalAbsensi = sanitizeInput($_POST['tanggalAbsensi']) ?? date('Y-m-d');
+        $tanggalHariIni = date('Y-m-d');
         if (!empty($idAbsensi)) {
             $result = deleteAbsensi($idAbsensi);
             if ($result > 0) {
@@ -54,8 +54,8 @@ if (isset($_POST['flagAbsensi'])) {
             } else {
                 $response = ["status" => false, "pesan" => "Failed to delete Absensi: " . mysqli_error($db)];
             }
-        } else {
-            $result = addAbsensi($idProyek, $idTukang, $tanggalAbsensi);
+        } else {    
+            $result = addAbsensi($idProyek, $idTukang, $tanggalHariIni);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Absensi added successfully!"];
             } else {
