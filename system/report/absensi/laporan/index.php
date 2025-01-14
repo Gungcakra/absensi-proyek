@@ -93,8 +93,10 @@ ob_start();
                     <th rowspan="2">Jml</th>
                     <th rowspan="2">Gaji Harian</th>
                     <th rowspan="2">Total</th>
-                    <th rowspan="2">Bon</th>
-                    <th rowspan="2">Sisa</th>
+                    <th rowspan="2">Bon(Rp)</th>
+                    <th rowspan="2">Sisa(Rp)</th>
+                    <th rowspan="2">Keterangan</th>
+                    <th rowspan="2">TTD</th>
                 </tr>
                 <tr>
                     <?php foreach ($range as $day) { ?>
@@ -128,10 +130,10 @@ ob_start();
                                         $durasiKerja = ($waktuKeluar - $waktuMasuk) / 3600; 
                                         if ($durasiKerja < 7) {
                                             $hadirIncrement = 0.5;
-                                            $status = 'setHari';
+                                            $status = '0.5';
                                         } else {
                                             $hadirIncrement = 1.0;
-                                            $status = 'Hadir';
+                                            $status = '1';
                                         }
                                     } else {
                                         $hadirIncrement = 0.0;
@@ -159,8 +161,10 @@ ob_start();
                         <td><?= $hadirCount ?></td>
                         <td><?= rupiah($gajiHarian) ?></td>
                         <td><?= rupiah($totalGaji) ?></td>
-                        <td><?= rupiah($totalBon) ?></td>
-                        <td><?= rupiah($sisa) ?></td>
+                        <td><?= rupiahTanpaRp($totalBon) ?></td>
+                        <td><?= rupiahTanpaRp($sisa) ?></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 <?php } ?>
             </tbody>

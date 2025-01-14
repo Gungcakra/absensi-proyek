@@ -4,6 +4,9 @@
 function rupiah($angka) {
     return "Rp " . number_format($angka, 0, ',', '.');
 }
+function rupiahTanpaRp($angka) {
+    return number_format($angka, 0, ',', '.');
+}
 
 function ubahKePersen($currentValue, $totalValue) {
     if ($totalValue == 0) {

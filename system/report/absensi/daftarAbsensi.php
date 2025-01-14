@@ -69,8 +69,10 @@ if ($rentangTanggal) {
                     <th rowspan="2" style="text-align: center;">Jml</th>
                     <th rowspan="2" style="text-align: center;">Gaji Harian</th>
                     <th rowspan="2" style="text-align: center;">Total</th>
-                    <th rowspan="2" style="text-align: center;">Bon</th>
-                    <th rowspan="2" style="text-align: center;">Sisa</th>
+                    <th rowspan="2" style="text-align: center;">Bon(Rp)</th>
+                    <th rowspan="2" style="text-align: center;">Sisa(Rp)</th>
+                    <th rowspan="2" style="text-align: center;">Keterangan</th>
+                    <th rowspan="2" style="text-align: center;">TTD</th>
                 </tr>
                 <tr>
                     <?php foreach ($range as $day) { ?>
@@ -104,10 +106,10 @@ if ($rentangTanggal) {
                                         $durasiKerja = ($waktuKeluar - $waktuMasuk) / 3600; 
                                         if ($durasiKerja < 7) {
                                             $hadirIncrement = 0.5;
-                                            $status = 'setHari';
+                                            $status = '0.5';
                                         } else {
                                             $hadirIncrement = 1.0;
-                                            $status = 'Hadir';
+                                            $status = '1';
                                         }
                                     } else {
                                         $hadirIncrement = 0.0;
@@ -136,8 +138,10 @@ if ($rentangTanggal) {
                         <td style="text-align:center;"><?= $hadirCount ?></td>
                         <td style="text-align:center;"><?= rupiah($gajiHarian) ?></td>
                         <td style="text-align:center;"><?= rupiah($totalGaji) ?></td>
-                        <td style="text-align:center;"><?= rupiah($totalBon) ?></td>
-                        <td style="text-align:center;"><?= rupiah($sisa) ?></td>
+                        <td style="text-align:center;"><?= rupiahTanpaRp($totalBon) ?></td>
+                        <td style="text-align:center;"><?= rupiahTanpaRp($sisa) ?></td>
+                        <td style="text-align:center;"></td>
+                        <td style="text-align:center;"></td>
                     </tr>
                 <?php } ?>
             </tbody>
