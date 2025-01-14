@@ -1,8 +1,8 @@
 # Error 404 handling
-ErrorDocument 404 https://php-template.cakra-portfolio.my.id/error/404/
+ErrorDocument 404 https://gmcontractor.my.id/error/404/
 
 # Error 500 handling
-ErrorDocument 500 https://php-template.cakra-portfolio.my.id/error/500/
+ErrorDocument 500 https://gmcontractor.my.id/error/500/
 
 # Enable RewriteEngine
 RewriteEngine On

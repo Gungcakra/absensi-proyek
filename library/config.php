@@ -54,7 +54,7 @@ function checkUserSession($db)
         // Redirect to home page based on the server host
         $redirectUrl = ($_SERVER['HTTP_HOST'] === 'localhost')
             ? BASE_URL_HTML
-            : 'https://absensi-proyek.cakra-portfolio.my.id';
+            : 'https://gmcontractor.my.id';
 
         header("Location: $redirectUrl");
         exit();
@@ -73,7 +73,7 @@ function checkUserSession($db)
         // Redirect to home page based on the server host
         $redirectUrl = ($_SERVER['HTTP_HOST'] === 'localhost')
             ? BASE_URL_HTML
-            : 'https://absensi-proyek.cakra-portfolio.my.id';
+            : 'https://gmcontractor.my.id';
 
         header("Location: $redirectUrl");
         exit();
