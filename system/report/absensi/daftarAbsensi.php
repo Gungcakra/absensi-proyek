@@ -72,7 +72,7 @@ if ($rentangTanggal) {
                     <th rowspan="2" style="text-align: center;">Total</th>
                     <th rowspan="2" style="text-align: center;">Bon(Rp)</th>
                     <th rowspan="2" style="text-align: center;">Sisa(Rp)</th>
-                    <th rowspan="2" style="text-align: center;">DTR(Rp)</th>
+                    <th rowspan="2" style="text-align: center; width: 120px;">DTR(Rp)</th>
                     <th rowspan="2" style="text-align: center; width: 120px;">Tanda Tangan</th>
                     <th rowspan="2" style="text-align: center; width: 170px;">Keterangan</th>
                 </tr>

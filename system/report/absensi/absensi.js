@@ -156,7 +156,6 @@ function generateLaporan() {
 }
 
 
-
 function notifikasi(status, pesan) {
   if (status === true) {
     toastr.success(pesan);

@@ -42,7 +42,7 @@ function waktuKeluar($idAbsensi, $waktuKeluar)
 if (isset($_POST['flagAbsensi'])) {
     $flagAbsensi = sanitizeInput($_POST['flagAbsensi']);
     if ($flagAbsensi === 'absensi') {
-        $idTukang = sanitizeInput($_POST['idTukang']);
+        $idTukang = sanitizeInput(data: $_POST['idTukang']);
         $idProyek = sanitizeInput($_POST['idProyek']);
         $idAbsensi = sanitizeInput($_POST['idAbsensi']);
         $tanggalAbsensi = sanitizeInput($_POST['tanggalAbsensi']);
