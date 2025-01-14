@@ -71,10 +71,10 @@ handleLogin();
    </head>
   <body class=" "></body>
     <!-- loader Start -->
-    <div id="loading"></div>
+    <!-- <div id="loading"></div>
           <div id="loading-center">
           </div>
-    </div>
+    </div> -->
     <!-- loader END -->
     
       <div class="wrapper"></div>
