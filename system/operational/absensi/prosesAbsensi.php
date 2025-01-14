@@ -73,6 +73,7 @@ if (isset($_POST['flagAbsensi'])) {
 
         $idAbsensi = sanitizeInput($_POST['idAbsensi']);
         $waktuMasuk = date('Y-m-d H:i:s', strtotime(sanitizeInput($_POST['waktuMasuk'])));
+
         $result = waktuMasuk($idAbsensi, $waktuMasuk);
         if ($result > 0) {
             $response = ["status" => true, "pesan" => "Update Waktu Masuk!"];

@@ -81,10 +81,10 @@ WHERE tukang.idProyek = ?",
 
 <body class=" color-light ">
     <!-- loader Start -->
-    <div id="loading">
+    <!-- <div id="loading">
         <div id="loading-center">
         </div>
-    </div>
+    </div> -->
     <!-- loader END -->
     <!-- Wrapper Start -->
     <div class="wrapper">
@@ -128,11 +128,16 @@ WHERE tukang.idProyek = ?",
                                     </td> -->
 
                                     <td>
-                                        <input type="time" name="   uk" id="waktuMasuk" value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>" onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
+                                        <input type="time" name="waktuMasuk" id="waktuMasuk-<?= $key ?>"
+                                            value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>"
+                                            onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
                                     </td>
                                     <td>
-                                        <input type="time" name="waktuKeluar" id="waktuKeluar" value="<?= timeStampToHourMinute($row['waktuKeluar'] ) ?? '' ?>" onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
+                                        <input type="time" name="waktuKeluar" id="waktuKeluar-<?= $key ?>"
+                                            value="<?= timeStampToHourMinute($row['waktuKeluar']) ?? '' ?>"
+                                            onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
                                     </td>
+
                                 </tr>
                             <?php } ?>
                         </tbody>

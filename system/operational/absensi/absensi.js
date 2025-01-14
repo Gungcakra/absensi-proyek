@@ -63,8 +63,6 @@ function deleteAbsensi(id) {
   });
 }
 
-
-
 function prosesAbsensi(data) {
   const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
   const idTukang = data.idTukang;
@@ -78,12 +76,12 @@ function prosesAbsensi(data) {
       idAbsensi: idAbsensi,
       idTukang: idTukang,
       idProyek: idProyek,
-
     },
     dataType: "json",
     success: function (data) {
       const { status, pesan } = data;
       notifikasi(status, pesan);
+      location.reload();
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error("Error:", textStatus, errorThrown);
@@ -104,7 +102,6 @@ function setHari(data) {
       idAbsensi: idAbsensi,
       idTukang: idTukang,
       idProyek: idProyek,
-
     },
     dataType: "json",
     success: function (data) {
@@ -117,9 +114,9 @@ function setHari(data) {
   });
 }
 
-function updateWaktuMasuk(data){
+function updateWaktuMasuk(data, waktuMasuk) {
   const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
-  const waktuMasuk = $("#waktuMasuk").val();
+
   $.ajax({
     url: "../prosesAbsensi.php",
     type: "post",
@@ -127,8 +124,7 @@ function updateWaktuMasuk(data){
     data: {
       flagAbsensi: "waktuMasuk",
       idAbsensi: idAbsensi,
-      waktuMasuk: waktuMasuk
-
+      waktuMasuk: waktuMasuk,
     },
     dataType: "json",
     success: function (data) {
@@ -139,12 +135,11 @@ function updateWaktuMasuk(data){
       console.error("Error:", textStatus, errorThrown);
     },
   });
-
 }
-function updateWaktuKeluar(data){
+
+function updateWaktuKeluar(data, waktuKeluar) {
   const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
-  const waktuKeluar = $("#waktuKeluar").val();
-  
+
   $.ajax({
     url: "../prosesAbsensi.php",
     type: "post",
@@ -152,8 +147,7 @@ function updateWaktuKeluar(data){
     data: {
       flagAbsensi: "waktuKeluar",
       idAbsensi: idAbsensi,
-      waktuKeluar: waktuKeluar
-
+      waktuKeluar: waktuKeluar,
     },
     dataType: "json",
     success: function (data) {
@@ -164,9 +158,7 @@ function updateWaktuKeluar(data){
       console.error("Error:", textStatus, errorThrown);
     },
   });
-
 }
-
 
 function cariDaftarAbsensi() {
   const searchQuery = $("#searchQuery").val();
@@ -200,8 +192,6 @@ function cariDaftarAbsensi() {
     });
   }
 }
-
-
 
 function notifikasi(status, pesan) {
   if (status === true) {
