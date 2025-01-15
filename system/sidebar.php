@@ -125,7 +125,7 @@
         <div class="iq-sidebar-logo d-flex align-items-center">
             <a href="<?= BASE_URL_HTML ?>/backend/index.html" class="header-logo">
                 <img src="<?= BASE_URL_HTML ?>/assets/images/logo.svg" alt="logo">
-                <h3 class="logo-title light-logo">ABSENSI</h3>
+                <h3 class="logo-title light-logo">GM</h3>
             </a>
             <div class="iq-menu-bt-sidebar ml-0">
                 <i class="las la-bars wrapper-menu"></i>

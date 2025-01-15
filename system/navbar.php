@@ -9,7 +9,7 @@ $userData = query("SELECT * FROM user WHERE userId = ?", [$userId])[0];
             <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                 <i class="ri-menu-line wrapper-menu"></i>
                 <a href="<?= BASE_URL_HTML ?>/backend/index.html" class="header-logo">
-                    <h4 class="logo-title text-uppercase">Absensi</h4>
+                    <h4 class="logo-title text-uppercase">GMCOTRACTOR</h4>
 
                 </a>
             </div>
