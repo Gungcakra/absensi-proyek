@@ -4,8 +4,10 @@ require_once __DIR__ . "/../../../library/config.php";
 checkUserSession($db);
 
 function addProyek($namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status) {
-    $query = "INSERT INTO proyek (namaProyek, namaPemilik, tanggalMulai, tanggalTarget, alamat, status) VALUES (?, ?, ?, ?, ?, ?)";
-    return query($query, [$namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status]);
+    $getLastId = query("SELECT IFNULL(MAX(idProyek), 0) AS lastId FROM proyek",[]);
+    $newId = $getLastId[0]['lastId'] + 1;
+    $query = "INSERT INTO proyek (idProyek, namaProyek, namaPemilik, tanggalMulai, tanggalTarget, alamat, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    return query($query, [$newId, $namaProyek, $namaPemilik, $tanggalMulai, $tanggalTarget, $alamat, $status]);
 }
 
 function deleteProyek($idProyek) {
