@@ -10,9 +10,12 @@ function getLastTukang() {
 }
 
 function addTukang($idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji) {
-    $query = "INSERT INTO tukang (idProyek, nama, alamat, telp, bidang, jenis, gaji) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    return query($query, [$idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji]);
+    $getastId = query("SELECT IFNULL(MAX(idTukang), 0) AS lastId FROM tukang",[]);
+    $newId = $getastId[0]['lastId'] + 1;
+    $query = "INSERT INTO tukang (IdTukang, idProyek, nama, alamat, telp, bidang, jenis, gaji) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    return query($query, [$newId, $idProyek, $nama, $alamat, $telp, $bidang, $jenis, $gaji]);
 }
+
 
 function deleteTukang($idTukang) {
     $query = "DELETE FROM tukang WHERE idTukang = ?";
