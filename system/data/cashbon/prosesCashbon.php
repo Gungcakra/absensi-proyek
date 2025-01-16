@@ -13,7 +13,7 @@ function getLastCashbon() {
 
 function addCashbon($idTukang, $keterangan, $nominal, $tanggal) {
     $getLasId = "SELECT IFNULL(MAX(idCashbon), 0) AS lastId FROM cashbon";
-    $lastId = query($getLasId);
+    $lastId = query($getLasId,[]);
     $newId = $lastId[0]['lastId'] + 1;
     $query = "INSERT INTO cashbon (idCashbon, idTukang, keterangan, nominal, tanggal) VALUES (?, ?, ?, ?, ?)";
     return query($query, [$newId, $idTukang, $keterangan, $nominal, $tanggal]);
