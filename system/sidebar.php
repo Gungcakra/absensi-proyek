@@ -123,7 +123,7 @@
 
     <div class="iq-sidebar sidebar-default">
         <div class="iq-sidebar-logo d-flex align-items-center">
-            <a href="<?= BASE_URL_HTML ?>/backend/index.html" class="header-logo">
+            <a href="<?= BASE_URL_HTML ?>/system/" class="header-logo">
                 <img src="<?= BASE_URL_HTML ?>/assets/images/logo.svg" alt="logo">
                 <h3 class="logo-title light-logo">GM</h3>
             </a>
