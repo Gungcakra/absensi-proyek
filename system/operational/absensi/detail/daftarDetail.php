@@ -65,12 +65,13 @@ ORDER BY tukang.nama ASC;
 
                 <td>
                     <input type="time" name="waktuMasuk" id="waktuMasuk-<?= $key ?>"
-                        value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>"
+                        value="<?= !empty($row['waktuMasuk']) ? timeStampToHourMinute($row['waktuMasuk']) : '00:00' ?>"
                         onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
+
                 </td>
                 <td>
                     <input type="time" name="waktuKeluar" id="waktuKeluar-<?= $key ?>"
-                        value="<?= timeStampToHourMinute($row['waktuKeluar']) ?? '' ?>"
+                        value="<?= timeStampToHourMinute($row['waktuKeluar']) ?? '00:00' ?>"
                         onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
                 </td>
 
