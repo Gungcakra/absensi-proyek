@@ -71,7 +71,7 @@ ORDER BY tukang.nama ASC;
                 </td>
                 <td>
                     <input type="time" name="waktuKeluar" id="waktuKeluar-<?= $key ?>"
-                        value="<?= timeStampToHourMinute($row['waktuKeluar']) ?? '00:00' ?>"
+                        value="<?= !empty($row['waktuKeluar']) ? timeStampToHourMinute($row['waktuKeluar']) : '00:00' ?>"
                         onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
                 </td>
 
