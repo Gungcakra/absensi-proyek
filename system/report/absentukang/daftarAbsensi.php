@@ -87,13 +87,13 @@ $tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
                         $tanggal = "$tahun-$bulan-" . str_pad($day, 2, '0', STR_PAD_LEFT);
                         $absensi = $absensiMap[$tanggal][$tukang['idTukang']] ?? null;
 
-                        $waktuMasuk = ($absensi && !empty($absensi['waktuMasuk'])) ? getHourFromTimeStamp($absensi['waktuMasuk']) : '';
-                        $waktuKeluar = ($absensi && !empty($absensi['waktuKeluar'])) ? getHourFromTimeStamp($absensi['waktuKeluar']) : '';
+                        $waktuMasuk = ($absensi && !empty($absensi['waktuMasuk'])) ? getHourFromTimeStamp($absensi['waktuMasuk']) : ' - ';
+                        $waktuKeluar = ($absensi && !empty($absensi['waktuKeluar'])) ? getHourFromTimeStamp($absensi['waktuKeluar']) : ' - ';
                     ?>
                         <tr>
-                            <td style="text-align: center;"><?= getDateFromDate($tanggal) ?></td>
-                            <td style="text-align: center;"><?= $waktuMasuk ?></td>
-                            <td style="text-align: center;"><?= $waktuKeluar ?></td>
+                            <td style="text-align: center;"><?= getDateFromDate($tanggal)?></td>
+                            <td style="text-align: center;"><?= $waktuMasuk?></td>
+                            <td style="text-align: center;"><?= $waktuKeluar?></td>
                             <td style="text-align: center;"></td>
                         </tr>
                     <?php

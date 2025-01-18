@@ -120,11 +120,11 @@ if ($rentangTanggal) {
                                         }
                                     } else {
                                         $hadirIncrement = 0.0;
-                                        $status = '-';
+                                        $status = ' - ';
                                     }
                                 } else {
                                     $hadirIncrement = 0.0;
-                                    $status = '-';
+                                    $status = ' - ';
                                 }
                             }
                             $hadirCount += $hadirIncrement;
