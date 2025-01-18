@@ -6,57 +6,12 @@ require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 checkUserSession($db);
 $idProyek = $_GET['data'] ?? '';
 $idAbsensi = $_GET['absen'] ?? '';
-$tanggalHariIni = date('Y-m-d');
 if ($idProyek) {
     $idProyek = decryptUrl($idProyek);
 }
 if ($idAbsensi) {
     $idAbsensi = decryptUrl($idAbsensi);
-    $tanggalAbsensi = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['tanggal'];
-    $idProyek = query("SELECT * FROM absensi WHERE idAbsensi = ?", [$idAbsensi])[0]['idProyek'];
-    $dataDetailAbsensi = query(
-        "SELECT 
-            proyek.*,
-            absensi.idAbsensi,
-            tukang.idTukang,
-            tukang.nama AS namaTukang,
-            tukang.bidang,
-            tukang.jenis,
-            absensi.waktuMasuk,
-            absensi.waktuKeluar,
-            IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
-        FROM tukang
-        LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
-        LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
-            AND absensi.idProyek = tukang.idProyek 
-            AND absensi.tanggal = ?
-        WHERE tukang.idProyek = ?
-        ORDER BY tukang.nama ASC",
-        [$tanggalAbsensi, $idProyek]
-    );
-} else {
-    $dataDetailAbsensi = query(
-        "SELECT 
-            proyek.*,
-            absensi.idAbsensi,
-            tukang.idTukang,
-            tukang.nama AS namaTukang,
-            tukang.bidang,
-            tukang.jenis,
-            absensi.waktuMasuk,
-            absensi.waktuKeluar,
-            IF(absensi.idTukang IS NOT NULL, 'Hadir', 'Tidak Hadir') AS status
-        FROM tukang
-        LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
-        LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
-            AND absensi.idProyek = tukang.idProyek 
-            AND absensi.tanggal >= ?
-        WHERE tukang.idProyek = ?
-        ORDER BY tukang.nama ASC",
-        [$tanggalHariIni, $idProyek]
-    );
 }
-
 ?>
 
 <!doctype html>
@@ -102,54 +57,15 @@ if ($idAbsensi) {
             <div class="container-fluid bg-white p-4 rouned-md">
                 <?php if (!empty($tanggalAbsensi)) { ?>
                     <p class="font-size-20 font-weight-bold">Absensi Proyek <?= tanggalTerbilang($tanggalAbsensi) ?? '' ?></p>
-                <?php }else{ ?>
+                <?php } else { ?>
                     <p class="font-size-20 font-weight-bold">Absensi Proyek</p>
-                    <?php }?>
-                <div class="row">
-                    <table class="table table-striped dataTable mt-4" role="grid"
-                        aria-describedby="tukang-list-page-info">
-                        <thead>
-                            <tr>
-                                <th>NO</th>
-                                <th>Tukang</th>
-                                <th>Status</th>
-                                <th>Waktu Masuk</th>
-                                <th>Waktu Keluar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($dataDetailAbsensi as $key => $row) { ?>
-                                <tr>
-                                    <td><?= $key + 1 ?></td>
-                                    <td><?= $row['namaTukang'] ?></td>
-                                    <td>
-                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
-                                            <div class="custom-switch-inner">
-                                                <input type="checkbox" class="custom-control-input bg-success" id="customSwitch-<?= $key ?>" <?= $row['status'] === 'Hadir' ? 'checked' : '' ?> onclick="prosesAbsensi(<?= htmlspecialchars(json_encode($row)) ?>)">
-                                                <label class="custom-control-label" for="customSwitch-<?= $key ?>">
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <!-- <td>
-                                        <input type="checkbox" name="setHari" id="" setHari" onclick="setHari(<?= htmlspecialchars(json_encode($row)) ?>)" style="width: 20px; height: 20px;" <?= $row['setHari'] === 1 ? 'checked' : '' ?>>
-                                    </td> -->
+                <?php } ?>
+                <input type="date" name="tanggalAbsensi" id="tanggalAbsensi" class="form-control" style="width: 200px;" onchange="cariDaftarDetail()">
+                <input type="hidden" name="idProyek" id="idProyek" value="<?= $idProyek ?? '' ?>">
+                <input type="hidden" name="idAbsensi" id="idAbsensi" value="<?= $idAbsensi ?? '' ?>">
 
-                                    <td>
-                                        <input type="time" name="waktuMasuk" id="waktuMasuk-<?= $key ?>"
-                                            value="<?= timeStampToHourMinute($row['waktuMasuk']) ?? '' ?>"
-                                            onchange="updateWaktuMasuk(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
-                                    </td>
-                                    <td>
-                                        <input type="time" name="waktuKeluar" id="waktuKeluar-<?= $key ?>"
-                                            value="<?= timeStampToHourMinute($row['waktuKeluar']) ?? '' ?>"
-                                            onchange="updateWaktuKeluar(<?= htmlspecialchars(json_encode($row)) ?>, this.value)">
-                                    </td>
+                <div class="row" id="daftarDetail">
 
-                                </tr>
-                       <?php } ?>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -181,7 +97,7 @@ if ($idAbsensi) {
     <script src="<?= BASE_URL_HTML ?>/assets/vendor/moment.min.js"></script>
 
     <!-- MAIN JS -->
-    <script src="<?= BASE_URL_HTML ?>/system/operational/absensi/absensi.js"></script>
+    <script src="<?= BASE_URL_HTML ?>/system/operational/absensi/detail/detail.js"></script>
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
