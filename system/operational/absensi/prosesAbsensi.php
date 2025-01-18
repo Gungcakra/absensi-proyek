@@ -12,9 +12,11 @@ function getLastAbsensi()
 
 function addAbsensi($idProyek, $idTukang, $tanggalAbsensi)
 {
-    
-    $query = "INSERT INTO absensi (idProyek, idTukang, tanggal) VALUES (?, ?, ?)";
-    return query($query, [$idProyek, $idTukang, $tanggalAbsensi]);
+
+    $waktuMasuk = $tanggalAbsensi . ' 08:00:00';
+    $waktuKeluar = $tanggalAbsensi . ' 17:00:00';
+    $query = "INSERT INTO absensi (idProyek, idTukang, waktuMasuk, waktuKeluar, tanggal) VALUES (?, ?, ?, ?, ?)";
+    return query($query, [$idProyek, $idTukang, $waktuMasuk, $waktuKeluar, $tanggalAbsensi]);
 }
 
 function deleteAbsensi($idAbsensi)

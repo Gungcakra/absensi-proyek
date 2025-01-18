@@ -29,6 +29,11 @@ ORDER BY tukang.nama ASC;
     [$tanggalHariIni, $idProyek]
 );
 ?>
+
+<head>
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+</head>
 <table class="table table-striped dataTable mt-4" role="grid"
     aria-describedby="tukang-list-page-info">
     <thead>
@@ -73,3 +78,6 @@ ORDER BY tukang.nama ASC;
         <?php } ?>
     </tbody>
 </table>
+
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

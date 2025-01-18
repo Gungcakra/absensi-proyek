@@ -33,33 +33,38 @@ function cariDaftarDetail() {
 }
 
 function prosesAbsensi(data) {
-  const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
-  const idTukang = data.idTukang;
-  const idProyek = data.idProyek;
-  const tanggalAbsensi = $("#tanggalAbsen").val();
-  $.ajax({
-    url: "../prosesAbsensi.php",
-    type: "post",
-    enctype: "multipart/form-data",
-    data: {
-      flagAbsensi: "absensi",
-      idAbsensi: idAbsensi,
-      idTukang: idTukang,
-      idProyek: idProyek,
-      tanggalAbsensi: tanggalAbsensi,
-    },
-    dataType: "json",
-    success: function (data) {
-      const { status, pesan } = data;
-      notifikasi(status, pesan);
-      location.reload();
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.error("Error:", textStatus, errorThrown);
-    },
-  });
-}
-
+    const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
+    const idTukang = data.idTukang;
+    const idProyek = data.idProyek;
+    const tanggalAbsensi = $("#tanggalAbsensi").val();
+  
+    $.ajax({
+      url: "../prosesAbsensi.php",
+      type: "post",
+      enctype: "multipart/form-data",
+      data: {
+        flagAbsensi: "absensi",
+        idAbsensi: idAbsensi,
+        idTukang: idTukang,
+        idProyek: idProyek,
+        tanggalAbsensi: tanggalAbsensi,
+      },
+      dataType: "json",
+      success: function (data) {
+        const { status, pesan } = data;
+        notifikasi(status, pesan);
+  
+        // Update konten halaman jika diperlukan
+        $("#daftarDetail").html(data.updatedHtml);
+  
+        // Set nilai input tanggalAbsensi kembali
+        $("#tanggalAbsensi").val(tanggalAbsensi);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error("Error:", textStatus, errorThrown);
+      },
+    });
+  }
 function updateWaktuMasuk(data, waktuMasuk) {
   const idAbsensi = data.idAbsensi !== undefined ? data.idAbsensi : null;
 
