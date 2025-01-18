@@ -62,9 +62,9 @@ $absensi = query($query, $params);
                     <p class="font-size-18"> <i class="las la-calendar-alt"></i><?= tanggalTerbilang($row['tanggalTarget']) ?></p>
                 </div>
             </div>
-            <button class="btn btn-light font-weight-bold mt-2" type="button" data-toggle="collapse" data-target="#collapseTable<?= $key ?>" aria-expanded="false" aria-controls="collapseTable<?= $key ?>">
+            <!-- <button class="btn btn-light font-weight-bold mt-2" type="button" data-toggle="collapse" data-target="#collapseTable<?= $key ?>" aria-expanded="false" aria-controls="collapseTable<?= $key ?>">
                 Detail Absen
-            </button>
+            </button> -->
             <div class="collapse" id="collapseTable<?= $key ?>">
                 <!-- <a href="laporan/?absen" class="btn-success p-1 rounded-sm text-center">Laporan Absen</a> -->
                 <table class="table table-bordered">
