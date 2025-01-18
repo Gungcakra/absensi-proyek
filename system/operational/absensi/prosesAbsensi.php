@@ -57,7 +57,7 @@ if (isset($_POST['flagAbsensi'])) {
                 $response = ["status" => false, "pesan" => "Failed to delete Absensi: " . mysqli_error($db)];
             }
         } else {    
-            $result = addAbsensi($idProyek, $idTukang, $tanggalHariIni);
+            $result = addAbsensi($idProyek, $idTukang, tanggalAbsensi: $tanggalAbsensi);
             if ($result > 0) {
                 $response = ["status" => true, "pesan" => "Absensi added successfully!"];
             } else {
