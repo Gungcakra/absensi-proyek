@@ -26,10 +26,10 @@ checkUserSession($db);
       <link rel="stylesheet" href="<?= BASE_URL_HTML ?>/assets/vendor/tui-calendar/tui-time-picker/dist/tui-time-picker.css">  </head>
   <body class="  ">
     <!-- loader Start -->
-    <div id="loading">
+    <!-- <div id="loading">
           <div id="loading-center">
           </div>
-    </div>
+    </div> -->
     <!-- loader END -->
     <!-- Wrapper Start -->
     <div class="wrapper">

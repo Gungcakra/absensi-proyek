@@ -1,6 +1,6 @@
 <?php
 
-// KONVERSI  RUPIAH
+
 function rupiah($angka) {
     return "Rp " . number_format($angka, 0, ',', '.');
 }
