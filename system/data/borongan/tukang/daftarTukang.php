@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../../library/config.php";
+require_once "../../../../library/config.php";
 require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 
 //CEK USER
@@ -8,7 +8,7 @@ checkUserSession($db);
 
 $flagTukang = isset($_POST['flagTukang']) ? $_POST['flagTukang'] : '';
 $searchQuery = isset($_POST['searchQuery']) ? $_POST['searchQuery'] : '';
-$tipe = 0;
+$tipe = 1;
 $limit = isset($_POST['limit']) ? $_POST['limit'] : 10;
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $offset = ($page - 1) * $limit;
@@ -23,13 +23,12 @@ if ($flagTukang === 'cari') {
     //   $params[] = $roleId;
     // }
     if (!empty($searchQuery)) {
-        
         $conditions .= " AND tukang.nama LIKE ?";
         $params[] = "%$searchQuery%";
     }
 }
 
-$totalQuery = "SELECT COUNT(*) as total FROM tukang INNER JOIN proyek ON tukang.idProyek = proyek.idProyek WHERE tukang.tipe = {$tipe}"  . $conditions;
+$totalQuery = "SELECT COUNT(*) as total FROM tukang INNER JOIN proyek ON tukang.idProyek = proyek.idProyek WHERE tukang.tipe = {$tipe}" . $conditions;
 $totalResult = query($totalQuery, $params);
 $totalRecords = $totalResult[0]['total'];
 $totalPages = ceil($totalRecords / $limit);
@@ -38,7 +37,8 @@ $query = "SELECT
                 tukang.*,
                 proyek.namaProyek
           FROM tukang 
-          INNER JOIN proyek ON tukang.idProyek = proyek.idProyek WHERE tukang.tipe = ?"
+          INNER JOIN proyek ON tukang.idProyek = proyek.idProyek
+          WHERE tukang.tipe = ?"
           . $conditions . " ORDER BY tukang.nama ASC LIMIT ? OFFSET ?";
 
 
@@ -100,7 +100,7 @@ $tukang = query($query, $params);
     <?php endforeach; ?>
     <?php } else { ?>
         <tr>
-            <td colspan="7" class="text-center">Data Tidak Ditemukan!</td>
+            <td colspan="10" class="text-center">Data Tidak Ditemukan!</td>
         </tr>
     <?php } ?>
 
