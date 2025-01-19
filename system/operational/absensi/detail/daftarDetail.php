@@ -5,7 +5,7 @@ require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 $idProyek = $_POST['idProyek'] ?? '';
 $idAbsensi = $_POST['idAbsensi'] ?? '';
 $tanggalHariIni = $_POST['tanggalAbsensi'] ?? '';
-
+$tipe = 0;
 $dataDetailAbsensi = query(
     "SELECT 
     proyek.*,
@@ -22,11 +22,11 @@ LEFT JOIN proyek ON proyek.idProyek = tukang.idProyek
 LEFT JOIN absensi ON tukang.idTukang = absensi.idTukang 
                    AND tukang.idProyek = absensi.idProyek 
                    AND absensi.tanggal = ?
-WHERE tukang.idProyek = ?
+WHERE tukang.idProyek = ? AND tukang.tipe = ?
 GROUP BY tukang.idTukang, tukang.nama, tukang.bidang, tukang.jenis, proyek.idProyek
 ORDER BY tukang.nama ASC;
 ",
-    [$tanggalHariIni, $idProyek]
+    [$tanggalHariIni, $idProyek, $tipe]
 );
 ?>
 
