@@ -8,7 +8,7 @@ checkUserSession($db);
 
 $idProyek = $_POST['idProyek'] ?? '';
 $bulanTahunAbsensi = $_POST['bulanTahun'] ?? '';
-
+$tipe = 1;
 if (empty($idProyek) || empty($bulanTahunAbsensi)) {
     die('<div class="alert alert-warning mt-2" role="alert">
         <div class="iq-alert-icon">
@@ -34,7 +34,7 @@ $rentangTanggal = [
     range(21, $jumlahHariBulan)
 ];
 
-$tukangList = query("SELECT * FROM tukang WHERE idProyek = ?", [$idProyek]);
+$tukangList = query("SELECT * FROM tukang WHERE idProyek = ? AND tipe = ?", [$idProyek, $tipe]);
 
 ?>
 
