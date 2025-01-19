@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../../../library/config.php";
+require_once "../../../../../library/config.php";
 checkUserSession($db);
 
 $idCashbon = $_GET['data'] ?? '';
@@ -67,7 +67,7 @@ if ($idCashbon) {
                                     <select class="form-control select-tukang" id="idTukang" name="idTukang">
                                         <option value="">Pilih Tukang</option>
                                         <?php
-                                        $tukangList = query("SELECT * FROM tukang WHERE tipe = ?",[0]);
+                                        $tukangList = query("SELECT * FROM tukang WHERE tipe = ?",[1]);
                                         foreach ($tukangList as $tukang) {
                                             $selected = ($data['idTukang'] ?? '') == $tukang['idTukang'] ? 'selected' : '';
                                         ?>

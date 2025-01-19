@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../../library/config.php";
+require_once "../../../../library/config.php";
 require_once "{$constant('BASE_URL_PHP')}/library/dateFunction.php";
 require_once "{$constant('BASE_URL_PHP')}/library/currencyFunction.php";
 
@@ -9,7 +9,7 @@ checkUserSession($db);
 
 $flagCashbon = isset($_POST['flagCashbon']) ? $_POST['flagCashbon'] : '';
 $searchQuery = isset($_POST['searchQuery']) ? $_POST['searchQuery'] : '';
-$tipe = 0;
+$tipe = 1;
 $limit = isset($_POST['limit']) ? $_POST['limit'] : 10;
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $offset = ($page - 1) * $limit;

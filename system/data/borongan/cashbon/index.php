@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../../library/config.php";
+require_once "../../../../library/config.php";
 
 //CEK USER
 checkUserSession($db);
@@ -140,7 +140,7 @@ checkUserSession($db);
     <script src="<?= BASE_URL_HTML ?>/assets/vendor/moment.min.js"></script>
     <!-- MAIN JS -->
 
-    <script src="<?= BASE_URL_HTML ?>/system/data/cashbon/cashbon.js"></script>
+    <script src="<?= BASE_URL_HTML ?>/system/data/borongan/cashbon/cashbon.js"></script>
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
